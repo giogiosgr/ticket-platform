@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/fragments :: head('home')}"></head>
+
+<body>
+
+	<header>
+		<nav th:replace="~{fragments/fragments :: navbar('home')}"></nav>
+	</header>
+
+	<main>
+		<div class="card mx-4 my-4" style="width: 18rem;">
+			<img th:src="@{/img/dummy_300x200_ffffff_cccccc.png}" class="card-img-top" alt="...">
+			<div class="card-body">
+				<p th:text="|Ticket Platform by ${name}|" class="card-text text-center fs-4"></p>
+			</div>
+		</div>
+	</main>
+
+
+	<footer>
+		<th:block th:replace="~{fragments/fragments :: scripts}"></th:block>
+	</footer>
+
+</body>
+
+</html>
