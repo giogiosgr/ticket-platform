@@ -30,7 +30,7 @@ import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "operators")
-public class Operator {
+public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
