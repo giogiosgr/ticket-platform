@@ -29,7 +29,6 @@ import jakarta.validation.constraints.*;
 @SuppressWarnings("unused")
 
 @Entity
-@Table(name = "operators")
 public class User {
 	
 	@Id

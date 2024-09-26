@@ -35,9 +35,9 @@ public class TicketService {
 
 	}
 
-	public List<Ticket> getByNameWithOrderByName(String name) {
+	public List<Ticket> getByTitleWithOrderByTitle(String title) {
 
-		return repo.findByNameContainingOrderByName(name);
+		return repo.findByTitleContainingOrderByTitle(title);
 
 	}
 

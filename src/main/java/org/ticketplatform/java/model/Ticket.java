@@ -42,14 +42,14 @@ public class Ticket {
 	@Column(name = "title", nullable = false)
 	private String title;
 	
-	@Column(name = "description")
+	@Column(name = "description", columnDefinition = "text")
 	private String description;
 	
-	@Size(min=2, max=255)
-	@Column(name = "category", length = 50, nullable = false)
+	@Size(min=2, max=100)
+	@Column(name = "category", length = 100, nullable = false)
 	private String category;
 	
-	@Size(min=2, max=255)
+	@Size(min=2, max=50)
 	@Column(name = "status", length = 50, nullable = false)
 	private String status;
 	
