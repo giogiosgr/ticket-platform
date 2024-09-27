@@ -56,12 +56,12 @@
 							<td th:text="${ticket.title}" class="fs-5"></td>
 							<td th:text="${ticket.category}"></td>
 							<td th:text="${ticket.status}"></td>
-							<td th:text="${ticket.createdAt}"></td>
-							<td th:text="${ticket.updatedAt}"></td>
+							<td th:text="${ticket.getFormattedCreatedAt()}"></td>
+							<td th:text="${ticket.getFormattedUpdatedAt()}"></td>
 							<td class="text-center">
 								<a class="btn btn-sm btn-success m-1"
 									th:href="@{'http://localhost:8080/tickets/show/{id}'(id=${ticket.id})}"
-									role="button">Dettagli</a>
+									role="button">Visualizza</a>
 
 								<!--    <th:block sec:authorize="hasAuthority('ADMIN')">  -->
 

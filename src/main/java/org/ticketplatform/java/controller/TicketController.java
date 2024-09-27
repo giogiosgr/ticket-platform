@@ -1,39 +1,108 @@
 package org.ticketplatform.java.controller;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.ticketplatform.java.model.Ticket;
 import org.ticketplatform.java.service.TicketService;
 
+import jakarta.validation.Valid;
 
 @SuppressWarnings("unused")
 
 @Controller
 @RequestMapping("/tickets")
 public class TicketController {
-	
+
 	@Autowired
 	TicketService ticketService;
-	
+
+	// INDEX
 	@GetMapping()
 	public String index(Model model) {
 
 		// consegna dei dati a tickets/index
 		model.addAttribute("tickets", ticketService.getAll());
-        
+
 		return "/tickets/index";
 	}
-	
+
+	// SEARCH
 	@GetMapping("/search")
 	public String search(@RequestParam String title, Model model) {
 
-		// consegna al model di specifiche ennuple di pizza tramite JPA Query Methods (tramite service)
 		model.addAttribute("tickets", ticketService.getByTitleWithOrderByTitle(title));
 
 		return "/tickets/index";
+	}
+
+	// SHOW
+	@GetMapping("/show/{id}")
+	public String show(@PathVariable int id, Model model) {
+
+		model.addAttribute("ticket", ticketService.getById(id));
+
+		return "/tickets/show";
+	}
+
+	// CREATE
+	@GetMapping("/create")
+	public String create(Model model) {
+
+		model.addAttribute("ticket", new Ticket());
+
+		return "/tickets/create";
+	}
+
+	// STORE
+	@PostMapping("/create")
+	public String store(@Valid @ModelAttribute("ticket") Ticket ticketForm, BindingResult bindingResult, Model model,
+			RedirectAttributes attributes) {
+
+		if (bindingResult.hasErrors()) {
+			return "/tickets/create";
+		}
+
+		ticketService.save(ticketForm);
+
+		attributes.addFlashAttribute("successMessage", "ticket " + ticketForm.getTitle() + " creato con successo");
+
+		return "redirect:/tickets";
+	}
+
+	// EDIT
+	@GetMapping("/edit/{id}")
+	public String edit(@PathVariable int id, Model model) {
+
+		model.addAttribute("ticket", ticketService.getById(id));
+
+		return "/tickets/edit";
+	}
+
+	// UPDATE
+	@PostMapping("/edit/{id}")
+	public String update(@Valid @ModelAttribute("ticket") Ticket ticketForm, BindingResult bindingResult, Model model,
+			RedirectAttributes attributes) {
+
+		if (bindingResult.hasErrors()) {
+			return "/tickets/edit";
+		}
+
+		ticketService.save(ticketForm);
+
+		attributes.addFlashAttribute("successMessage", "ticket " + ticketForm.getTitle() + " modificato con successo");
+
+		return "redirect:/tickets";
 	}
 
 }

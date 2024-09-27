@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/fragments :: head('crea')}"></head>
+
+<body>
+
+	<header th:insert="~{fragments/fragments :: navbar('index')}"></header>
+
+	<main class="container">
+		<h2 class="my-4">CREAZIONE TICKET</h2>
+		<div class="row">
+			<div class="col-6">
+				<form id="ticket-form" th:object="${ticket}" th:action="@{/tickets/create}" method="POST">
+					<div class="mb-3">
+						<label for="title" class="form-label">Titolo ticket</label>
+						<input name="title" type="text" class="form-control" id="title" th:field="*{title}"
+							th:errorClass="is-invalid">
+						<div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('title')}" th:text="${err}"></li>
+							</ul>
+						</div>
+					</div>
+					<div class="mb-3">
+						<label for="description" class="form-label">Descrizione ticket</label>
+						<textarea name="description" class="form-control" id="description" rows="4"
+							th:field="*{description}" th:errorClass="is-invalid">
+						</textarea>
+						<div th:if="${#fields.hasErrors('description')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('description')}" th:text="${err}"></li>
+							</ul>
+						</div>
+					</div>
+					<div class="mb-3">
+						<label for="category" class="form-label">Scegli la categoria</label>
+						<select class="form-select" id="category" th:field="*{category}">
+							<option value="Gestionale">Gestionale</option>
+							<option value="Hardware">Hardware</option>
+						</select>
+					</div>
+					<button type="submit" class="btn btn-primary m-2">Conferma Inserimento</button>
+					<button type="reset" class="btn btn-primary m-2">Reset</button>
+					<div class="mb-3 d-none">
+						<label for="status" class="form-label">Stato</label>
+						<select class="form-select" id="status" th:field="*{status}">
+							<option value="da fare" selected>da fare</option>
+							<option value="in corso">in corso</option>
+							<option value="completato">completato</option>
+						</select>
+					</div>
+				</form>
+			</div>
+		</div>
+	</main>
+
+	<footer>
+		<th:block th:replace="~{fragments/fragments :: scripts}"></th:block>
+	</footer>
+
+</body>
+
+</html>

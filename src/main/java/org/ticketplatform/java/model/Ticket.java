@@ -2,6 +2,7 @@ package org.ticketplatform.java.model;
 
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Set;
 
@@ -104,6 +105,11 @@ public class Ticket {
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
+	
+	public String getFormattedCreatedAt() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+		return createdAt.format(formatter);
+	}
 
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
@@ -111,6 +117,11 @@ public class Ticket {
 
 	public LocalDateTime getUpdatedAt() {
 		return updatedAt;
+	}
+	
+	public String getFormattedUpdatedAt() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+		return updatedAt.format(formatter);
 	}
 
 	public void setUpdatedAt(LocalDateTime updatedAt) {
