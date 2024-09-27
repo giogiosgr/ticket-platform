@@ -66,4 +66,10 @@ public class TicketService {
 
 	}
 
+	public void delete(Ticket ticketToDelete) {
+		
+		repo.delete(ticketToDelete);
+		
+	}
+
 }
