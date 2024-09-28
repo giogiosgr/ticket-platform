@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/fragments :: head('crea')}"></head>
+
+<body>
+
+	<header th:insert="~{fragments/fragments :: navbar('create')}"></header>
+
+	<main class="container">
+		<h2 class="my-4">CREAZIONE NOTA</h2>
+		<div class="row">
+			<div class="col-6">
+				<form id="note-form" th:object="${note}" th:action="@{/notes/create}" method="POST">
+					<div class="mb-3">
+						<label for="text" class="form-label">Testo della nota</label>
+						<textarea name="text" class="form-control" id="text" rows="4" th:field="*{text}"
+							th:errorClass="is-invalid">
+						</textarea>
+						<div th:if="${#fields.hasErrors('text')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('text')}" th:text="${err}"></li>
+							</ul>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary m-2">Conferma Inserimento</button>
+					<button type="reset" class="btn btn-primary m-2">Reset</button>
+					<!-- Fields nascosti -->
+					<div class="mb-3 d-none">
+						<input type="text" th:field="*{ticket.id}">
+					</div>
+				</form>
+			</div>
+		</div>
+	</main>
+
+	<footer>
+		<th:block th:replace="~{fragments/fragments :: scripts}"></th:block>
+	</footer>
+
+</body>
+
+</html>
