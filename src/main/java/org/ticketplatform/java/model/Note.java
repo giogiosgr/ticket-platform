@@ -46,6 +46,10 @@ public class Note {
 	@JoinColumn(name = "ticket_id", nullable = false)
 	@JsonBackReference
 	private Ticket ticket;
+	
+	@ManyToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;
 
 	// getters e setters
 
@@ -99,4 +103,12 @@ public class Note {
 		this.ticket = ticket;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 }

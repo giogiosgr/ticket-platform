@@ -22,6 +22,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
@@ -64,6 +65,10 @@ public class Ticket {
 	@OneToMany(mappedBy = "ticket", cascade = { CascadeType.REMOVE })
 	@JsonManagedReference
 	private List<Note> notes;
+	
+	@ManyToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;
 
 	// getters e setters
 
@@ -141,4 +146,12 @@ public class Ticket {
 		this.notes = notes;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 }

@@ -1,6 +1,7 @@
 package org.ticketplatform.java.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.ticketplatform.java.model.Note;
+import org.ticketplatform.java.model.User;
+import org.ticketplatform.java.repo.UserRepository;
 import org.ticketplatform.java.service.NoteService;
 import org.ticketplatform.java.service.TicketService;
 
@@ -28,12 +31,23 @@ public class NoteController {
 	@Autowired
 	TicketService ticketService;
 	
+	@Autowired
+	UserRepository userRepo;
+	
 	// CREATE
 	@GetMapping("/create/{id}")
-	public String create(@PathVariable int id, Model model) {
+	public String create(@PathVariable int id, Authentication authentication, Model model) {
 
+		// definizione di ticket e user a cui la nota apparterrà
 		Note newNote = new Note();
 		newNote.setTicket(ticketService.getById(id));
+		// ciclo for each per determinare quale user presente in db è quello loggato
+		for(User user : userRepo.findAll()) {
+			if(user.getUsername().equals(authentication.getName())) {
+				newNote.setUser(user);
+				break;
+			}		
+		}
 		
 		model.addAttribute("note", newNote);
 		
@@ -61,7 +75,7 @@ public class NoteController {
 
 	// EDIT
 	@GetMapping("/edit/{id}")
-	public String edit(@PathVariable int id, Model model) {
+	public String edit(@PathVariable int id, Authentication authentication, Model model) {
 
 		model.addAttribute("note", noteService.getById(id));
 

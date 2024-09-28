@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.ticketplatform.java.model.Ticket;
+import org.ticketplatform.java.repo.UserRepository;
 import org.ticketplatform.java.service.TicketService;
 
 import jakarta.validation.Valid;
@@ -27,6 +28,9 @@ public class TicketController {
 
 	@Autowired
 	TicketService ticketService;
+	
+	@Autowired
+	UserRepository userRepo;
 
 	// INDEX
 	@GetMapping()
@@ -62,7 +66,8 @@ public class TicketController {
 	public String create(Model model) {
 
 		model.addAttribute("ticket", new Ticket());
-
+		model.addAttribute("operators", userRepo.findAll());
+		
 		return "/tickets/create";
 	}
 
@@ -72,12 +77,13 @@ public class TicketController {
 			RedirectAttributes attributes) {
 
 		if (bindingResult.hasErrors()) {
+			model.addAttribute("operators", userRepo.findAll());
 			return "/tickets/create";
 		}
 
 		ticketService.save(ticketForm);
 
-		attributes.addFlashAttribute("successMessage", "ticket " + ticketForm.getTitle() + " creato con successo");
+		attributes.addFlashAttribute("successMessage", "ticket " + ticketForm.getId() + " creato con successo");
 
 		return "redirect:/tickets";
 	}
@@ -87,6 +93,7 @@ public class TicketController {
 	public String edit(@PathVariable int id, Model model) {
 
 		model.addAttribute("ticket", ticketService.getById(id));
+		model.addAttribute("operators", userRepo.findAll());
 
 		return "/tickets/edit";
 	}
@@ -97,12 +104,13 @@ public class TicketController {
 			RedirectAttributes attributes) {
 
 		if (bindingResult.hasErrors()) {
+			model.addAttribute("operators", userRepo.findAll());
 			return "/tickets/edit";
 		}
 
 		ticketService.save(ticketForm);
 
-		attributes.addFlashAttribute("successMessage", "ticket " + ticketForm.getTitle() + " modificato con successo");
+		attributes.addFlashAttribute("successMessage", "ticket " + ticketForm.getId() + " modificato con successo");
 
 		return "redirect:/tickets";
 	}

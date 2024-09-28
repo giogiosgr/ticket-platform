@@ -64,6 +64,12 @@ public class User {
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Role> roles;
 	
+	@OneToMany(mappedBy = "user", cascade = { CascadeType.REMOVE })
+	private List<Ticket> tickets;
+	
+	@OneToMany(mappedBy = "user", cascade = { CascadeType.REMOVE })
+	private List<Note> notes;
+	
 	// getters e setters
 
 	public Integer getId() {
@@ -129,5 +135,21 @@ public class User {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
-	
+
+	public List<Ticket> getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(List<Ticket> tickets) {
+		this.tickets = tickets;
+	}
+
+	public List<Note> getNotes() {
+		return notes;
+	}
+
+	public void setNotes(List<Note> notes) {
+		this.notes = notes;
+	}
+
 }

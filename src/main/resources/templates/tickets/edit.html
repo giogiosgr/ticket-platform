@@ -49,6 +49,16 @@
 							<option value="completato">completato</option>
 						</select>
 					</div>
+					<div class="mb-3">
+						<label for="user" class="form-label">Assegnato a</label>
+						<select class="form-select" id="user" th:field="*{user}">
+							<th:block th:each="operator : ${operators}">
+								<th:block th:if="${operator.status} == true">
+									<option th:value="${operator.id}">[[${operator.username}]]</option>
+								</th:block>
+							</th:block>
+						</select>
+					</div>
 					<button type="submit" class="btn btn-primary m-2">Conferma Inserimento</button>
 					<button type="reset" class="btn btn-primary m-2">Reset</button>
 					<!-- Fields nascosti -->
