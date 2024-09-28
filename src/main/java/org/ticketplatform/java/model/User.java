@@ -43,7 +43,7 @@ public class User {
 	
 	@NotNull
 	@Size(max=50)
-	@Column(name = "password", length=50, nullable = false, unique = true)
+	@Column(name = "password", length=50, nullable = false)
 	private String password;
 	
 	@NotNull
