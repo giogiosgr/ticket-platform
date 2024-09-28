@@ -65,7 +65,11 @@ public class TicketController {
 	@GetMapping("/create")
 	public String create(Model model) {
 
-		model.addAttribute("ticket", new Ticket());
+		// creazione nuovo ticket a cui viene settato lo status predefinito "da fare" prima della consegna al model
+		Ticket newTicket = new Ticket();
+		newTicket.setStatus("da fare");
+		
+		model.addAttribute("ticket", newTicket);
 		model.addAttribute("operators", userRepo.findAll());
 		
 		return "/tickets/create";

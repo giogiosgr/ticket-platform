@@ -62,9 +62,7 @@
 					<button type="submit" class="btn btn-primary m-2">Conferma Inserimento</button>
 					<button type="reset" class="btn btn-primary m-2">Reset</button>
 					<!-- Fields nascosti -->
-					<div class="mb-3 d-none">
-						<input type="datetime-local" th:field="*{createdAt}">
-					</div>
+					<input type="hidden" th:field="*{createdAt}">
 				</form>
 			</div>
 		</div>
