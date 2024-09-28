@@ -3,6 +3,7 @@ package org.ticketplatform.java.controller;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,10 +30,11 @@ public class TicketController {
 
 	// INDEX
 	@GetMapping()
-	public String index(Model model) {
+	public String index(Authentication authentication, Model model) {
 
 		// consegna dei dati a tickets/index
 		model.addAttribute("tickets", ticketService.getAll());
+		model.addAttribute("username", authentication.getName());
 
 		return "/tickets/index";
 	}

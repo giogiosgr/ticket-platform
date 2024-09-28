@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -35,7 +36,15 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	// viene usata la Bean Validation
+	@NotNull
+	@Size(max=50)
+	@Column(name = "username", length=50, nullable = false, unique = true)
+	private String username;
+	
+	@NotNull
+	@Size(max=50)
+	@Column(name = "password", length=50, nullable = false, unique = true)
+	private String password;
 	
 	@NotNull
 	@NotEmpty
@@ -51,6 +60,9 @@ public class User {
 	
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<Role> roles;
 	
 	// getters e setters
 
@@ -92,6 +104,30 @@ public class User {
 
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 	
 }

@@ -10,7 +10,7 @@
 	<main class="container">
 		<div class="row">
 
-			<h2 class="mb-3">GESTIONE TICKETS:</h2>
+			<h2 class="my-3">GESTIONE TICKETS:</h2>
 
 			<div class="row my-2">
 				<form th:action="@{/tickets/search}" method="GET" class="col-8">
@@ -61,47 +61,43 @@
 								<a class="btn btn-sm btn-primary m-1"
 									th:href="@{'http://localhost:8080/tickets/show/{id}'(id=${ticket.id})}"
 									role="button">Visualizza</a>
-
-								<!--    <th:block sec:authorize="hasAuthority('ADMIN')">  -->
-
-								<a class="btn btn-sm btn-warning m-1"
-									th:href="@{'http://localhost:8080/tickets/edit/{id}'(id=${ticket.id})}"
-									role="button">Modifica</a>
-								<!-- Button trigger modal -->
-								<button type="button" class="btn btn-sm btn-danger m-1" data-bs-toggle="modal"
-									th:data-bs-target="'#delete-' + ${ticket.id}">
-									Cancella
-								</button>
-								<!-- Modal -->
-								<div class="modal fade" th:id="'delete-' + ${ticket.id}" tabindex="-1"
-									aria-labelledby="exampleModalLabel" aria-hidden="true">
-									<div class="modal-dialog">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h1 class="modal-title fs-5" id="exampleModalLabel">Conferma
-													cancellazione</h1>
-												<button type="button" class="btn-close" data-bs-dismiss="modal"
-													aria-label="Close"></button>
-											</div>
-											<div class="modal-body text-center">
-												Sei sicuro di voler eliminare il ticket [[ ${ticket.title} ]]?
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-secondary"
-													data-bs-dismiss="modal">Annulla</button>
-												<form class="d-inline-block"
-													th:action="@{http://localhost:8080/tickets/delete/{id}(id=${ticket.id})}"
-													method="POST">
-													<button class="btn btn-danger m-1" type="submit"
-														id="submitButton">Conferma</button>
-												</form>
+								<th:block sec:authorize="hasAuthority('ADMIN')">
+									<a class="btn btn-sm btn-warning m-1"
+										th:href="@{'http://localhost:8080/tickets/edit/{id}'(id=${ticket.id})}"
+										role="button">Modifica</a>
+									<!-- Button trigger modal -->
+									<button type="button" class="btn btn-sm btn-danger m-1" data-bs-toggle="modal"
+										th:data-bs-target="'#delete-' + ${ticket.id}">
+										Cancella
+									</button>
+									<!-- Modal -->
+									<div class="modal fade" th:id="'delete-' + ${ticket.id}" tabindex="-1"
+										aria-labelledby="exampleModalLabel" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h1 class="modal-title fs-5" id="exampleModalLabel">Conferma
+														cancellazione</h1>
+													<button type="button" class="btn-close" data-bs-dismiss="modal"
+														aria-label="Close"></button>
+												</div>
+												<div class="modal-body text-center">
+													Sei sicuro di voler eliminare il ticket [[ ${ticket.title} ]]?
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-bs-dismiss="modal">Annulla</button>
+													<form class="d-inline-block"
+														th:action="@{http://localhost:8080/tickets/delete/{id}(id=${ticket.id})}"
+														method="POST">
+														<button class="btn btn-danger m-1" type="submit"
+															id="submitButton">Conferma</button>
+													</form>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-
-								<!--	</th:block>   -->
-
+								</th:block>
 							</td>
 						</tr>
 					</tbody>
