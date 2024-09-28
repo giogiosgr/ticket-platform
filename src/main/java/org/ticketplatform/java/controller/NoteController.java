@@ -51,10 +51,12 @@ public class NoteController {
 		}
 
 		noteService.save(noteForm);
+		
+		int ticketID = noteForm.getTicket().getId();
 
-		attributes.addFlashAttribute("successMessage", "nota al ticket #" + noteForm.getTicket().getId() + " creata con successo");
+		attributes.addFlashAttribute("successMessage", "nota al ticket #" + ticketID + " creata con successo");
 
-		return "redirect:/tickets";
+		return ("redirect:/tickets/show/" + ticketID);
 	}
 
 	// EDIT
@@ -76,10 +78,12 @@ public class NoteController {
 		}
 
 		noteService.save(noteForm);
+		
+		int ticketID = noteForm.getTicket().getId();
 
-		attributes.addFlashAttribute("successMessage", "nota al ticket #" + noteForm.getTicket().getId() + " modificata con successo");
+		attributes.addFlashAttribute("successMessage", "nota al ticket #" + ticketID + " modificata con successo");
 
-		return "redirect:/tickets";
+		return ("redirect:/tickets/show/" + ticketID);
 	}
 
 	// DELETE
@@ -92,9 +96,9 @@ public class NoteController {
 
 		noteService.delete(noteToDelete);
 
-		attributes.addFlashAttribute("successMessage", "nota al ticket #" + ticketID + " eliminato con successo");
+		attributes.addFlashAttribute("successMessage", "nota al ticket #" + ticketID + " eliminata con successo");
 
-		return "redirect:/tickets";
+		return ("redirect:/tickets/show/" + ticketID);
 	}
 
 }

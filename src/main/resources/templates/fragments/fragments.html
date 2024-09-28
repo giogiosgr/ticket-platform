@@ -12,10 +12,10 @@
 
 <body>
 
-	<nav th:fragment="navbar(page)" class="navbar bg-body-tertiary ms-3">
-		<form class="container-fluid justify-content-start">
+	<nav th:fragment="navbar(page)" class="navbar bg-body-tertiary">
+		<form class="container-fluid justify-content-start ms-3">
 			<a th:unless="${page} == 'home'" th:href="@{http://localhost:8080}" class="navbar-brand">HOME</a>
-			<a href="http://localhost:8080/tickets"><button class="btn btn-outline-success me-2" type="button">temp</button></a>
+			<a href="http://localhost:8080/tickets"><button class="btn btn-outline-success me-2" type="button">TICKETS</button></a>
 		</form>
 	</nav>
 
@@ -24,7 +24,7 @@
 		<script th:src="@{/webjars/font-awesome/6.5.2/js/all.min.js}"></script>
 	</th:block>
 
-	<div th:fragment="successAlert(message)" class="alert alert-success alert-dismissible fade show" role="alert">
+	<div th:fragment="successAlert(message)" class="alert alert-success alert-dismissible fade show m-4" role="alert">
 		<h4 th:text="${message}" class="p-0 m-0"></h4>
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
 	</div>

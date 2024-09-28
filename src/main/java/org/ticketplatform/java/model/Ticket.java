@@ -63,7 +63,7 @@ public class Ticket {
 
 	@OneToMany(mappedBy = "ticket", cascade = { CascadeType.REMOVE })
 	@JsonManagedReference
-	private List<Note> discounts;
+	private List<Note> notes;
 
 	// getters e setters
 
@@ -133,12 +133,12 @@ public class Ticket {
 		this.updatedAt = updatedAt;
 	}
 
-	public List<Note> getDiscounts() {
-		return discounts;
+	public List<Note> getNotes() {
+		return notes;
 	}
 
-	public void setDiscounts(List<Note> discounts) {
-		this.discounts = discounts;
+	public void setNotes(List<Note> notes) {
+		this.notes = notes;
 	}
 
 }
