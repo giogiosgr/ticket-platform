@@ -29,17 +29,42 @@ public class UserController {
 
 		return "/users/show";
 	}
-	
+
 	// UPDATE
 	@PostMapping("/edit")
 	public String update(Authentication authentication, RedirectAttributes attributes) {
-		
-		// Si recupera lo user loggato per switchare lo status, se i vincoli son rispettati
+
+		// Si recupera l'operatore loggato per switchare lo status, con i seguenti vincoli:
+		// 1 - non può attivare lo stato "non attivo" se ha ticket aperti assegnati
+		// 2 - non può attivare lo stato "non attivo" se è l'unico operatore ancora attivo
+
 		User userToUpdate = userService.getByUsername(authentication.getName());
-		userToUpdate.setStatus(!userToUpdate.isStatus());
+		boolean userStatus = userToUpdate.isStatus();
+
+		if (userToUpdate.getOngoingTickets() > 0) {
+			attributes.addFlashAttribute("notSuccessMessage",
+					"Non puoi passare allo stato 'non disponibile' se hai ticket aperti");
+			return "redirect:/users/show";
+		}
+
+		int availableUsersCount = 0;
+		if (userStatus) {
+			for (User user : userService.getAll()) {
+				if (user.isStatus()) {
+					availableUsersCount++;
+				}
+			}
+			if (availableUsersCount == 1) {
+				attributes.addFlashAttribute("notSuccessMessage",
+						"Non puoi passare allo stato 'non disponibile' se sei l'unico operatore disponibile");
+				return "redirect:/users/show";
+			}
+		}
 		
+		userToUpdate.setStatus(!userStatus);
+
 		userService.save(userToUpdate);
-		
+
 		return "redirect:/users/show";
 	}
 

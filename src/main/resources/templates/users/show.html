@@ -5,10 +5,15 @@
 
 <body>
 
-	<header th:insert="~{fragments/fragments :: navbar('show')}"></header>
+	<header th:insert="~{fragments/fragments :: navbar('userpage')}"></header>
 
 	<main class="container">
 		<div class="row">
+
+			<th:block th:if="${notSuccessMessage != null}">
+				<div th:replace="~{fragments/fragments :: notSuccessAlert(${notSuccessMessage})}"></div>
+			</th:block>
+
 
 			<div class="col-5 mt-3">
 				<h4 class="fw-bold mb-3" th:text="'AREA PERSONALE - ' + ${user.username}"></h4>
@@ -22,6 +27,12 @@
 					<span class="fw-bold me-2">Email: </span>
 					<span th:text="${user.email}"></span>
 				</div>
+				<th:block sec:authorize="hasAuthority('OPERATOR')">
+					<div class="mb-3">
+						<span class="fw-bold me-2">Tickets in corso: </span>
+						<span th:text="${user.ongoingTickets}"></span>
+					</div>
+				</th:block>
 			</div>
 			<!-- Area per visualizzare lo stato attuale e cambiarlo (disponibile solo per il ruolo Operator) -->
 			<th:block sec:authorize="hasAuthority('OPERATOR')">

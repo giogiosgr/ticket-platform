@@ -25,16 +25,16 @@ import jakarta.validation.Valid;
 @Controller
 @RequestMapping("/notes")
 public class NoteController {
-	
+
 	@Autowired
 	NoteService noteService;
-	
+
 	@Autowired
 	TicketService ticketService;
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	// CREATE
 	@GetMapping("/create/{id}")
 	public String create(@PathVariable int id, Authentication authentication, Model model) {
@@ -43,9 +43,9 @@ public class NoteController {
 		Note newNote = new Note();
 		newNote.setTicket(ticketService.getById(id));
 		newNote.setUser(userService.getByUsername(authentication.getName()));
-		
+
 		model.addAttribute("note", newNote);
-		
+
 		return "/notes/create";
 	}
 
@@ -90,7 +90,7 @@ public class NoteController {
 		int ticketID = noteForm.getTicket().getId();
 		// update dell'orario di ultima modifica del ticket a cui appartiene la nota aggiornata
 		ticketService.update(ticketService.getById(ticketID));
-		
+
 		attributes.addFlashAttribute("successMessage", "nota al ticket #" + ticketID + " modificata con successo");
 
 		return ("redirect:/tickets/show/" + ticketID);
@@ -99,9 +99,9 @@ public class NoteController {
 	// DELETE
 	@PostMapping("/delete/{id}")
 	public String delete(@PathVariable int id, RedirectAttributes attributes) {
-		
+
 		Note noteToDelete = (noteService.getById(id));
-		
+
 		int ticketID = noteToDelete.getTicket().getId();
 
 		noteService.delete(noteToDelete);

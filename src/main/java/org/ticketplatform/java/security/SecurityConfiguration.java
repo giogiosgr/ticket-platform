@@ -21,7 +21,7 @@ public class SecurityConfiguration {
 
 		http.authorizeHttpRequests()
 		.requestMatchers("/tickets/create", "/tickets/edit/*").hasAuthority("ADMIN")
-		.requestMatchers("/", "/tickets", "tickets/show").hasAnyAuthority("ADMIN", "OPERATOR")
+		.requestMatchers("/", "/tickets", "tickets/show", "users/show").hasAnyAuthority("ADMIN", "OPERATOR")
 		.requestMatchers(HttpMethod.POST, "/tickets/**").hasAuthority("ADMIN")
 		.requestMatchers("/**").permitAll()
 		.and().formLogin().and().logout()

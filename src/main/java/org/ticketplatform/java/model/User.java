@@ -61,6 +61,11 @@ public class User {
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
 	
+	@Formula("(SELECT count(user.id) FROM user " 
+			+ "LEFT JOIN tickets ON user.id = tickets.user_id AND tickets.status != \"completato\" "
+			+ "WHERE tickets.user_id = id)")
+	private Integer ongoingTickets;
+	
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Role> roles;
 	
@@ -152,4 +157,12 @@ public class User {
 		this.notes = notes;
 	}
 
+	public Integer getOngoingTickets() {
+		return ongoingTickets;
+	}
+
+	public void setOngoingTickets(Integer ongoingTickets) {
+		this.ongoingTickets = ongoingTickets;
+	}
+	
 }

@@ -5,11 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.ticketplatform.java.model.Ticket;
 import org.ticketplatform.java.model.User;
 import org.ticketplatform.java.repo.UserRepository;
-
-import jakarta.validation.Valid;
 
 @Service
 public class UserService {
