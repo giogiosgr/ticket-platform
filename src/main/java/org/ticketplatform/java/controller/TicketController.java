@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.ticketplatform.java.model.Ticket;
 import org.ticketplatform.java.repo.UserRepository;
 import org.ticketplatform.java.service.TicketService;
+import org.ticketplatform.java.service.UserService;
 
 import jakarta.validation.Valid;
 
@@ -30,7 +31,7 @@ public class TicketController {
 	TicketService ticketService;
 	
 	@Autowired
-	UserRepository userRepo;
+	UserService userService;
 
 	// INDEX
 	@GetMapping()
@@ -70,7 +71,7 @@ public class TicketController {
 		newTicket.setStatus("da fare");
 		
 		model.addAttribute("ticket", newTicket);
-		model.addAttribute("operators", userRepo.findAll());
+		model.addAttribute("operators", userService.getAll());
 		
 		return "/tickets/create";
 	}
@@ -81,7 +82,7 @@ public class TicketController {
 			RedirectAttributes attributes) {
 
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("operators", userRepo.findAll());
+			model.addAttribute("operators", userService.getAll());
 			return "/tickets/create";
 		}
 
@@ -97,7 +98,7 @@ public class TicketController {
 	public String edit(@PathVariable int id, Model model) {
 
 		model.addAttribute("ticket", ticketService.getById(id));
-		model.addAttribute("operators", userRepo.findAll());
+		model.addAttribute("operators", userService.getAll());
 
 		return "/tickets/edit";
 	}
@@ -108,7 +109,7 @@ public class TicketController {
 			RedirectAttributes attributes) {
 
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("operators", userRepo.findAll());
+			model.addAttribute("operators", userService.getAll());
 			return "/tickets/edit";
 		}
 

@@ -16,6 +16,7 @@ import org.ticketplatform.java.model.User;
 import org.ticketplatform.java.repo.UserRepository;
 import org.ticketplatform.java.service.NoteService;
 import org.ticketplatform.java.service.TicketService;
+import org.ticketplatform.java.service.UserService;
 
 import jakarta.validation.Valid;
 
@@ -32,26 +33,19 @@ public class NoteController {
 	TicketService ticketService;
 	
 	@Autowired
-	UserRepository userRepo;
+	UserService userService;
 	
 	// CREATE
 	@GetMapping("/create/{id}")
 	public String create(@PathVariable int id, Authentication authentication, Model model) {
 
-		// definizione di ticket e user a cui la nota apparterrà
+		// definizione di ticket e user a cui la nota da passare al model apparterrà
 		Note newNote = new Note();
 		newNote.setTicket(ticketService.getById(id));
-		// ciclo for each per determinare quale user presente in db è quello loggato
-		for(User user : userRepo.findAll()) {
-			if(user.getUsername().equals(authentication.getName())) {
-				newNote.setUser(user);
-				break;
-			}		
-		}
+		newNote.setUser(userService.getByUsername(authentication.getName()));
 		
 		model.addAttribute("note", newNote);
 		
-
 		return "/notes/create";
 	}
 
