@@ -8,82 +8,86 @@
 	<header th:insert="~{fragments/fragments :: navbar('show')}"></header>
 
 	<main class="container">
+		<div class="row">
 
-		<th:block th:if="${successMessage != null}">
-			<div th:replace="~{fragments/fragments :: successAlert(${successMessage})}"></div>
-		</th:block>
+			<th:block th:if="${successMessage != null}">
+				<div th:replace="~{fragments/fragments :: successAlert(${successMessage})}"></div>
+			</th:block>
 
-		<h4 class="fw-bold ms-4 my-2" th:text="'Ticket #' + ${ticket.id} + ' - operatore: ' + ${ticket.user.username}">
-		</h4>
-		<p class="ms-4 my-2"><span class="fw-bold">Titolo: </span>[[${ticket.title}]]</p>
-		<p class="ms-4 my-2"><span class="fw-bold">Categoria: </span>[[${ticket.category}]]</p>
-		<p class="ms-4 my-2"><span class="fw-bold">Stato: </span>[[${ticket.status}]]</p>
-		<p class="ms-4 my-2"><span class="fw-bold">Creato il: </span>[[${ticket.getFormattedCreatedAt()}]]</p>
-		<p class="ms-4 my-2"><span class="fw-bold">Ultimo aggiornamento: </span>[[${ticket.getFormattedUpdatedAt()}]]
-		</p>
+			<h4 class="fw-bold ms-4 my-2"
+				th:text="'Ticket #' + ${ticket.id} + ' - operatore: ' + ${ticket.user.username}">
+			</h4>
+			<p class="ms-4 my-2"><span class="fw-bold">Titolo: </span>[[${ticket.title}]]</p>
+			<p class="ms-4 my-2"><span class="fw-bold">Categoria: </span>[[${ticket.category}]]</p>
+			<p class="ms-4 my-2"><span class="fw-bold">Stato: </span>[[${ticket.status}]]</p>
+			<p class="ms-4 my-2"><span class="fw-bold">Creato il: </span>[[${ticket.getFormattedCreatedAt()}]]</p>
+			<p class="ms-4 my-2"><span class="fw-bold">Ultimo aggiornamento:
+				</span>[[${ticket.getFormattedUpdatedAt()}]]
+			</p>
 
-		<div class="card text-bg-primary p-1 m-4" style="width: 40rem;">
-			<div class="card-body">
-				<h4 class="card-title">Descrizione del ticket:</h4>
-				<p class="card-text my-3 fs-5" th:text="${ticket.description}"></p>
-				<div class="text-end">
-					<a class="btn btn-sm btn-success m-1" th:href="@{'/notes/create/{id}'(id=${ticket.id})}"
-						role="button">Aggiungi Nota</a>
+			<div class="card text-bg-primary p-1 m-4" style="width: 40rem;">
+				<div class="card-body">
+					<h4 class="card-title">Descrizione del ticket:</h4>
+					<p class="card-text my-3 fs-5" th:text="${ticket.description}"></p>
+					<div class="text-end">
+						<a class="btn btn-sm btn-success m-1" th:href="@{'/notes/create/{id}'(id=${ticket.id})}"
+							role="button">Aggiungi Nota</a>
+					</div>
 				</div>
 			</div>
-		</div>
-		<!-- Note -->
-		<th:block th:each="note : ${ticket.notes}">
-			<div class="card text-bg-success p-1 m-4" style="width: 40rem;">
-				<div class="card-body">
-					<h4 class="card-title"
-						th:text="'Nota del ' + ${note.getFormattedCreatedAt()} + ' - autore: ' + ${note.user.username}">
-					</h4>
-					<p class="card-text my-3" th:text="${note.text}"></p>
-					<th:block th:if="${note.createdAt} != ${note.updatedAt}">
-						<p class="card-text my-2 fs-6 fst-italic text-end"
-							th:text="'Modificato il: ' + ${note.getFormattedUpdatedAt()}"></p>
-					</th:block>
-					<div class="text-end">
-						<a class="btn btn-sm btn-warning m-1" th:href="@{'/notes/edit/{id}'(id=${note.id})}"
-							role="button">Modifica</a>
-						<!-- Button trigger modal -->
-						<button type="button" class="btn btn-sm btn-danger m-1" data-bs-toggle="modal"
-							th:data-bs-target="'#delete-' + ${note.id}">
-							Cancella
-						</button>
-						<!-- Modal -->
-						<div class="modal fade" th:id="'delete-' + ${note.id}" tabindex="-1"
-							aria-labelledby="exampleModalLabel" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content text-dark">
-									<div class="modal-header">
-										<h1 class="modal-title fs-5" id="exampleModalLabel">
-											Conferma
-											cancellazione</h1>
-										<button type="button" class="btn-close" data-bs-dismiss="modal"
-											aria-label="Close"></button>
-									</div>
-									<div class="modal-body text-center">
-										Sei sicuro di voler eliminare questa nota?
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary"
-											data-bs-dismiss="modal">Annulla</button>
-										<form class="d-inline-block"
-											th:action="@{http://localhost:8080/notes/delete/{id}(id=${note.id})}"
-											method="post">
-											<button class="btn btn-danger m-1" type="submit"
-												id="submitButton">Conferma</button>
-										</form>
+			<!-- Note -->
+			<th:block th:each="note : ${ticket.notes}">
+				<div class="card text-bg-success p-1 m-4" style="width: 40rem;">
+					<div class="card-body">
+						<h4 class="card-title"
+							th:text="'Nota del ' + ${note.getFormattedCreatedAt()} + ' - autore: ' + ${note.user.username}">
+						</h4>
+						<p class="card-text my-3" th:text="${note.text}"></p>
+						<th:block th:if="${note.createdAt} != ${note.updatedAt}">
+							<p class="card-text my-2 fs-6 fst-italic text-end"
+								th:text="'Modificato il: ' + ${note.getFormattedUpdatedAt()}"></p>
+						</th:block>
+						<div class="text-end">
+							<a class="btn btn-sm btn-warning m-1" th:href="@{'/notes/edit/{id}'(id=${note.id})}"
+								role="button">Modifica</a>
+							<!-- Button trigger modal -->
+							<button type="button" class="btn btn-sm btn-danger m-1" data-bs-toggle="modal"
+								th:data-bs-target="'#delete-' + ${note.id}">
+								Cancella
+							</button>
+							<!-- Modal -->
+							<div class="modal fade" th:id="'delete-' + ${note.id}" tabindex="-1"
+								aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content text-dark">
+										<div class="modal-header">
+											<h1 class="modal-title fs-5" id="exampleModalLabel">
+												Conferma
+												cancellazione</h1>
+											<button type="button" class="btn-close" data-bs-dismiss="modal"
+												aria-label="Close"></button>
+										</div>
+										<div class="modal-body text-center">
+											Sei sicuro di voler eliminare questa nota?
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-bs-dismiss="modal">Annulla</button>
+											<form class="d-inline-block"
+												th:action="@{http://localhost:8080/notes/delete/{id}(id=${note.id})}"
+												method="post">
+												<button class="btn btn-danger m-1" type="submit"
+													id="submitButton">Conferma</button>
+											</form>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</th:block>
+			</th:block>
+		</div>
 	</main>
 
 	<footer>

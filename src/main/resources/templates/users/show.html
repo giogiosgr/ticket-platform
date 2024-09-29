@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/fragments :: head('user')}"></head>
+
+<body>
+
+	<header th:insert="~{fragments/fragments :: navbar('show')}"></header>
+
+	<main class="container">
+		<div class="row">
+
+			<div class="col-5 mt-3">
+				<h4 class="fw-bold mb-3" th:text="'AREA PERSONALE - ' + ${user.username}"></h4>
+				<div class="mb-3">
+					<th:block th:each="role : ${user.roles}">
+						<span class="fw-bold me-2">Ruoli: </span>
+						<span class="me-2" th:text="${role.name}"></span>
+					</th:block>
+				</div>
+				<div class="mb-3">
+					<span class="fw-bold me-2">Email: </span>
+					<span th:text="${user.email}"></span>
+				</div>
+			</div>
+			<!-- Area per visualizzare lo stato attuale e cambiarlo (disponibile solo per il ruolo Operator) -->
+			<th:block sec:authorize="hasAuthority('OPERATOR')">
+				<div class="col-7 mt-3">
+					<th:block th:if="${user.status} == true">
+						<div class="text-bg-success rounded-3 text-center p-2" style="width: 15rem;">DISPONIBILE
+						</div>
+					</th:block>
+					<th:block th:if="${user.status} == false">
+						<div class="text-bg-danger rounded-3 text-center p-2" style="width: 15rem;">NON DISPONIBILE
+						</div>
+					</th:block>
+					<form id="user-form" th:action="@{/users/edit}" method="POST">
+						<button type="submit" class="btn btn-primary my-2">Cambia stato</button>
+					</form>
+				</div>
+			</th:block>
+		</div>
+	</main>
+
+	<footer>
+		<th:block th:replace="~{fragments/fragments :: scripts}"></th:block>
+	</footer>
+
+</body>
+
+</html>
