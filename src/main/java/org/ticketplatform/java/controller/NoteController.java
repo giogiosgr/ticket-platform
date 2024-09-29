@@ -39,7 +39,7 @@ public class NoteController {
 	@GetMapping("/create/{id}")
 	public String create(@PathVariable int id, Authentication authentication, Model model) {
 
-		// definizione di ticket e user a cui la nota da passare al model apparterrà
+		// definizione di ticket e user a cui appartiene la nota da passare al model
 		Note newNote = new Note();
 		newNote.setTicket(ticketService.getById(id));
 		newNote.setUser(userService.getByUsername(authentication.getName()));
@@ -59,8 +59,9 @@ public class NoteController {
 		}
 
 		noteService.save(noteForm);
-		
 		int ticketID = noteForm.getTicket().getId();
+		// update dell'orario di ultima modifica del ticket a cui appartiene la nota creata
+		ticketService.update(ticketService.getById(ticketID));
 
 		attributes.addFlashAttribute("successMessage", "nota al ticket #" + ticketID + " creata con successo");
 
@@ -86,9 +87,10 @@ public class NoteController {
 		}
 
 		noteService.save(noteForm);
-		
 		int ticketID = noteForm.getTicket().getId();
-
+		// update dell'orario di ultima modifica del ticket a cui appartiene la nota aggiornata
+		ticketService.update(ticketService.getById(ticketID));
+		
 		attributes.addFlashAttribute("successMessage", "nota al ticket #" + ticketID + " modificata con successo");
 
 		return ("redirect:/tickets/show/" + ticketID);
