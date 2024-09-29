@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
+<!-- FRAGMENT DELL'HEAD --> 
 <head th:fragment="head(title)">
 	<title th:text="${title}"></title>
 	<meta charset="utf-8">
@@ -12,18 +13,30 @@
 
 <body>
 
+	<!-- FRAGMENT DELLA NAVBAR --> 
 	<nav th:fragment="navbar(page)" class="navbar bg-body-tertiary">
-		<form class="container-fluid justify-content-start ms-3">
-			<a th:unless="${page} == 'home'" th:href="@{http://localhost:8080}" class="navbar-brand">HOME</a>
-			<a href="http://localhost:8080/tickets"><button class="btn btn-outline-success me-2" type="button">TICKETS</button></a>
+		<form class="container-fluid ms-3 justify-content-between">
+			<div class="d-flex align-items-center">
+				<a th:unless="${page} == 'home'" th:href="@{http://localhost:8080}" class="navbar-brand mt-1">HOME</a>
+				<a href="http://localhost:8080/tickets"><button class="btn btn-outline-success"
+						type="button">TICKETS</button></a>
+			</div>
+			<div class="d-flex align-items-center">
+				<p class="mb-0 me-4" th:text="'Benvenuto, sei loggato come: ' + ${#authentication.principal.username} "></p>
+				<a class="btn btn-success me-3" th:href="@{http://localhost:8080/users/show}" role="button">Area
+					Personale</a>
+				<a class="btn btn-danger me-5" th:href="@{http://localhost:8080/logout}" role="button">Logout</a>
+			</div>
 		</form>
 	</nav>
 
+	<!-- FRAGMENT DEGLI SCRIPTS(FOOTER) --> 
 	<th:block th:fragment="scripts">
 		<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
 		<script th:src="@{/webjars/font-awesome/6.5.2/js/all.min.js}"></script>
 	</th:block>
 
+	<!-- FRAGMENT DEL SUCCESS MESSAGE --> 
 	<div th:fragment="successAlert(message)" class="alert alert-success alert-dismissible fade show m-4" role="alert">
 		<h4 th:text="${message}" class="p-0 m-0"></h4>
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
