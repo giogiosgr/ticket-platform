@@ -10,6 +10,10 @@ import org.ticketplatform.java.model.Ticket;
 public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 	
 	List<Ticket> findByTitleContainingOrderByTitle(String title);
+	
+	List<Ticket> findByCategory(String category);
+	
+	List<Ticket> findByStatus(String status);
 
 }
 
