@@ -1,1 +1,72 @@
-# MILESTONE 4
+# BEPT#2 - Milestone 4
+
+## Dashboard di gestione tickets
+## Obiettivi
+- Comprendere il Framework Spring: familiarizzare con la struttura del framework, e i suoi componenti principali
+- Installazione e Configurazione: saper installare e configurare un progetto Spring, inclusa  gestione delle dipendenze e impostazioni di configurazione.
+- Routing e Controller: Gestire le rotte e creare controller per rispondere alle richieste HTTP
+- Thymeleaf Templating: Utilizzare il motore di template per creare viste dinamiche.
+- CRUD risorse: implementare le operazioni fondamentali di creazione, lettura, modifica ed eliminazione delle risorse
+- Modellazione DB: definizione entità e relazioni e gestione la struttura del database e interagire con il database usando Hibernate ORM
+- Autenticazione e Autorizzazione: Implementare sistemi di autenticazione e autorizzazione per gestire l'accesso degli utenti
+- API Development: esporre le risorse sotto forma di API RESTful in formato JSON
+
+## Consegna
+### Nome repo: 
+### ticket-platform
+#### Il progetto prevede la realizzazione di una backoffice per la piattaforma di gestione delle richieste di supporto al team di assistenza tecnica di un prodotto.
+#### Sviluppiamo un’applicazione Spring che permetta all’utente admin di gestire e ricercare i ticket di supporto assegnandoli agli operatori.
+#### Sui ticket sono possibili le seguenti operazioni: 
+- creazione, visualizzazione, modifica, eliminazione
+- aggiornamento dello stato (da fare, in corso, completato)
+- aggiunta di una nota
+#### Un ticket deve essere obbligatoriamente assegnato ad un operatore disponibile in fase di creazione. Un operatore è disponibile quando non ha il flag di stato personale “non disponibile” attivo.
+#### Le entità categoria e operatore sono già caricate a DB (non è necessario sviluppare CRUD dedicate a queste risorse).
+#### Vanno consegnati:
+- diagramma E/R delle entità a database
+- repo codice backoffice piattaforma e servizi API
+
+## Requisiti
+### Tipologie di utenti
+#### Admin:
+- è già presente a database con sua email e password
+- può creare, visualizzare e modificare ticket
+#### Operatore:
+- sono utenti già presenti in database, ognuno con propria mail e psw
+- può visualizzare la lista dei ticket a lui assegnati
+- può visualizzare il dettaglio di un ticket a lui assegnato
+- può aggiornare lo stato di un ticket a lui assegnato
+- puoi aggiungere una nota a un ticket a lui assegnato
+- può modificare i propri dati dalla sua pagina tra cui lo stato personale in “non attivo” solo se non ha nemmeno un ticket in stato “da fare” o “in corso”
+### Dashboard admin:
+- visualizzazione tickets in formato tabellare
+- ricerca tickets per stringa di testo sul titolo
+- visualizzazione dettaglio ticket
+- aggiunta di note a un ticket
+### Pagina Ticket
+- mostra i dettagli del ticket
+- mostra lo stato
+- mostra l’operatore a cui è assegnato
+### Pagina Operatore
+- mostra dettagli operatore
+- mostra la lista di ticket assegnati
+### Note ai ticket
+#### Nella pagina di dettaglio di un ticket c’è una sezione per poter visualizzare l’elenco note e lasciare una nuova nota. Per ogni nota visualizzare
+- autore
+- data creazione
+- campo di testo
+### Servizi API
+#### Esponi le API per la visualizzazione della risorsa Ticket:
+- visualizzare l’elenco dei ticket
+- filtrare l’elenco dei ticket per categoria
+- filtrare l’elenco dei ticket per stato
+
+## Note Aggiuntive
+### Validazione
+#### Ricorda di utilizzare la validazione (soprattutto lato server) dei campi per garantire l’inserimento corretto dei dati, in particolare i dati obbligatori.
+### Libreria UI
+#### Puoi utilizzare Bootstrap o altra libreria UI per realizzare l’interfaccia del back-office, come ad esempio Tailwind.
+
+
+
+
