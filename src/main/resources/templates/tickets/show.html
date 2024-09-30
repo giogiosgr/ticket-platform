@@ -25,7 +25,7 @@
 				</span>[[${ticket.getFormattedUpdatedAt()}]]
 			</p>
 
-			<div class="card text-bg-primary p-1 m-4" style="width: 40rem;">
+			<div class="card text-bg-primary p-1 mx-4 my-3" style="width: 40rem;">
 				<div class="card-body">
 					<h4 class="card-title">Descrizione del ticket:</h4>
 					<p class="card-text my-3 fs-5" th:text="${ticket.description}"></p>
@@ -37,7 +37,7 @@
 			</div>
 			<!-- Note -->
 			<th:block th:each="note : ${ticket.notes}">
-				<div class="card text-bg-success p-1 m-4" style="width: 40rem;">
+				<div class="card text-bg-success p-1 mx-4 my-3" style="width: 40rem;">
 					<div class="card-body">
 						<h4 class="card-title"
 							th:text="'Nota del ' + ${note.getFormattedCreatedAt()} + ' - autore: ' + ${note.user.username}">
@@ -47,7 +47,8 @@
 							<p class="card-text my-2 fs-6 fst-italic text-end"
 								th:text="'Modificato il: ' + ${note.getFormattedUpdatedAt()}"></p>
 						</th:block>
-						<div class="text-end">
+						<!-- Blocco con i pulsanti, visibile soltanto se lo user loggato possiede la nota -->
+						<div th:if="${#authentication.principal.username} == ${note.user.username}" class="text-end">
 							<a class="btn btn-sm btn-warning m-1" th:href="@{'/notes/edit/{id}'(id=${note.id})}"
 								role="button">Modifica</a>
 							<!-- Button trigger modal -->

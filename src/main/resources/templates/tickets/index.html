@@ -59,7 +59,7 @@
 							<td th:text="${ticket.status}"></td>
 							<td th:text="${ticket.getFormattedCreatedAt()}"></td>
 							<td th:text="${ticket.getFormattedUpdatedAt()}"></td>
-							<td class="text-center">
+							<td class="text-center p-1">
 								<a class="btn btn-sm btn-primary m-1"
 									th:href="@{'http://localhost:8080/tickets/show/{id}'(id=${ticket.id})}"
 									role="button">Visualizza</a>
