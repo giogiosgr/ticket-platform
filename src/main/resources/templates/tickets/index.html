@@ -63,10 +63,10 @@
 								<a class="btn btn-sm btn-primary m-1"
 									th:href="@{'http://localhost:8080/tickets/show/{id}'(id=${ticket.id})}"
 									role="button">Visualizza</a>
+								<a class="btn btn-sm btn-warning m-1"
+									th:href="@{'http://localhost:8080/tickets/edit/{id}'(id=${ticket.id})}"
+									role="button">Aggiorna</a>
 								<th:block sec:authorize="hasAuthority('ADMIN')">
-									<a class="btn btn-sm btn-warning m-1"
-										th:href="@{'http://localhost:8080/tickets/edit/{id}'(id=${ticket.id})}"
-										role="button">Modifica</a>
 									<!-- Button trigger modal -->
 									<button type="button" class="btn btn-sm btn-danger m-1" data-bs-toggle="modal"
 										th:data-bs-target="'#delete-' + ${ticket.id}">

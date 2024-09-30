@@ -74,7 +74,7 @@ public class Note {
 	}
 
 	public String getFormattedCreatedAt() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd' 'HH:mm");
 		return createdAt.format(formatter);
 	}
 
@@ -87,7 +87,7 @@ public class Note {
 	}
 
 	public String getFormattedUpdatedAt() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd' 'HH:mm");
 		return updatedAt.format(formatter);
 	}
 

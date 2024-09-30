@@ -1,6 +1,9 @@
 package org.ticketplatform.java.controller;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.ticketplatform.java.model.Ticket;
+import org.ticketplatform.java.model.User;
 import org.ticketplatform.java.repo.UserRepository;
 import org.ticketplatform.java.service.TicketService;
 import org.ticketplatform.java.service.UserService;
@@ -37,27 +41,59 @@ public class TicketController {
 	@GetMapping()
 	public String index(Authentication authentication, Model model) {
 
-		// consegna dei dati a tickets/index
-		model.addAttribute("tickets", ticketService.getAll());
-		model.addAttribute("username", authentication.getName());
+		// consegna della lista di tickets alla index a seconda dello user loggato (ruolo e identità).
+		// Un admin vedrà tutti i ticket.
+		// Un operatore vedrà soltanto i ticket a lui assegnati
+		
+		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
+			model.addAttribute("tickets", ticketService.getAll());
+			return "/tickets/index";
+		}
+		
+		model.addAttribute("tickets", userService.getByUsername(authentication.getName()).getTickets());
 
 		return "/tickets/index";
 	}
 
 	// SEARCH
 	@GetMapping("/search")
-	public String search(@RequestParam String title, Model model) {
-
-		model.addAttribute("tickets", ticketService.getByTitleWithOrderByTitle(title));
+	public String search(@RequestParam String title, Authentication authentication, Model model) {
+		
+		// il principio di passaggio è lo stesso della index ma si agisce sulla lista ordinata per nome
+		
+		List<Ticket> orderedTickets = ticketService.getByTitleWithOrderByTitle(title);
+		
+		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
+			model.addAttribute("tickets", orderedTickets);
+			return "/tickets/index";
+		}
+        
+		List<Ticket> ownedTickets = userService.getByUsername(authentication.getName()).getTickets();
+		List<Ticket> ownedOrderedTickets = new ArrayList<>();
+		for (Ticket ticket : orderedTickets) {
+			if (ownedTickets.contains(ticket)) {
+				ownedOrderedTickets.add(ticket);
+			}
+		}
+		
+		model.addAttribute("tickets", ownedOrderedTickets);
 
 		return "/tickets/index";
 	}
 
 	// SHOW
 	@GetMapping("/show/{id}")
-	public String show(@PathVariable int id, Model model) {
+	public String show(@PathVariable int id, Authentication authentication, Model model) {
+		
+		// all'operatore a cui non è assegnata la risorsa viene restituita una pagina di errore
 
-		model.addAttribute("ticket", ticketService.getById(id));
+		Ticket ticketToShow = ticketService.getById(id);
+		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("OPERATOR")) &&
+				!userService.getByUsername(authentication.getName()).getTickets().contains(ticketToShow)) {		
+			return "/pages/authError";
+		}
+		
+		model.addAttribute("ticket", ticketToShow);
 
 		return "/tickets/show";
 	}
@@ -95,9 +131,17 @@ public class TicketController {
 
 	// EDIT
 	@GetMapping("/edit/{id}")
-	public String edit(@PathVariable int id, Model model) {
+	public String edit(@PathVariable int id, Authentication authentication, Model model) {
+		
+		// all'operatore a cui non è assegnata la risorsa viene restituita una pagina di errore
 
-		model.addAttribute("ticket", ticketService.getById(id));
+		Ticket ticketToEdit = ticketService.getById(id);
+		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("OPERATOR")) &&
+			!userService.getByUsername(authentication.getName()).getTickets().contains(ticketToEdit)) {		
+			return "/pages/authError";
+		}
+
+		model.addAttribute("ticket", ticketToEdit);
 		model.addAttribute("operators", userService.getAll());
 
 		return "/tickets/edit";
