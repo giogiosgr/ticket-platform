@@ -2,14 +2,14 @@
 
 ## Dashboard di gestione tickets
 ## Obiettivi
-- Comprendere il Framework Spring: familiarizzare con la struttura del framework, e i suoi componenti principali
-- Installazione e Configurazione: saper installare e configurare un progetto Spring, inclusa  gestione delle dipendenze e impostazioni di configurazione.
-- Routing e Controller: Gestire le rotte e creare controller per rispondere alle richieste HTTP
-- Thymeleaf Templating: Utilizzare il motore di template per creare viste dinamiche.
-- CRUD risorse: implementare le operazioni fondamentali di creazione, lettura, modifica ed eliminazione delle risorse
-- Modellazione DB: definizione entità e relazioni e gestione la struttura del database e interagire con il database usando Hibernate ORM
-- Autenticazione e Autorizzazione: Implementare sistemi di autenticazione e autorizzazione per gestire l'accesso degli utenti
-- API Development: esporre le risorse sotto forma di API RESTful in formato JSON
+- **Comprendere il Framework Spring:** familiarizzare con la struttura del framework, e i suoi componenti principali
+- **Installazione e Configurazione:** saper installare e configurare un progetto Spring, inclusa  gestione delle dipendenze e impostazioni di configurazione.
+- **Routing e Controller:** Gestire le rotte e creare controller per rispondere alle richieste HTTP
+- **Thymeleaf Templating:** Utilizzare il motore di template per creare viste dinamiche.
+- **CRUD risorse:** implementare le operazioni fondamentali di creazione, lettura, modifica ed eliminazione delle risorse
+- **Modellazione DB:** definizione entità e relazioni e gestione la struttura del database e interagire con il database usando Hibernate ORM
+- **Autenticazione e Autorizzazione:** Implementare sistemi di autenticazione e autorizzazione per gestire l'accesso degli utenti
+- **API Development:** esporre le risorse sotto forma di API RESTful in formato JSON
 
 ## Consegna
 ### Nome repo: 
