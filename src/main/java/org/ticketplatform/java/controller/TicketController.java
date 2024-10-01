@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.ticketplatform.java.model.Ticket;
 import org.ticketplatform.java.model.User;
 import org.ticketplatform.java.repo.UserRepository;
+import org.ticketplatform.java.service.CategoryService;
 import org.ticketplatform.java.service.TicketService;
 import org.ticketplatform.java.service.UserService;
 
@@ -35,8 +36,11 @@ public class TicketController {
 	TicketService ticketService;
 	
 	@Autowired
+	CategoryService categoryService;
+	
+	@Autowired
 	UserService userService;
-
+	
 	// INDEX
 	@GetMapping()
 	public String index(Authentication authentication, Model model) {
@@ -108,6 +112,7 @@ public class TicketController {
 		
 		model.addAttribute("ticket", newTicket);
 		model.addAttribute("operators", userService.getAll());
+		model.addAttribute("categories", categoryService.getAll());
 		
 		return "/tickets/create";
 	}
@@ -119,6 +124,7 @@ public class TicketController {
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("operators", userService.getAll());
+			model.addAttribute("categories", categoryService.getAll());
 			return "/tickets/create";
 		}
 
@@ -143,6 +149,7 @@ public class TicketController {
 
 		model.addAttribute("ticket", ticketToEdit);
 		model.addAttribute("operators", userService.getAll());
+		model.addAttribute("categories", categoryService.getAll());
 
 		return "/tickets/edit";
 	}
@@ -154,6 +161,7 @@ public class TicketController {
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("operators", userService.getAll());
+			model.addAttribute("categories", categoryService.getAll());
 			return "/tickets/edit";
 		}
 

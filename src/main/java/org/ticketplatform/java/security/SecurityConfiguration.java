@@ -51,17 +51,3 @@ public class SecurityConfiguration {
 	}
 
 }
-
-/*		
-
-
-.requestMatchers("/pizzas", "pizzas/show").hasAnyAuthority("ADMIN", "USER")
-.requestMatchers("/ingredients/create", "/ingredients/edit/*").hasAuthority("ADMIN")
-.requestMatchers("/ingredients", "ingredients/show").hasAnyAuthority("ADMIN", "USER")
-.requestMatchers(HttpMethod.POST, "/pizzas/**").hasAuthority("ADMIN")
-.requestMatchers(HttpMethod.POST, "/ingredients/**").hasAuthority("ADMIN")
-.requestMatchers("/user").hasAnyAuthority("ADMIN", "USER")
-.requestMatchers("/admin").hasAuthority("ADMIN")
-
-
-*/

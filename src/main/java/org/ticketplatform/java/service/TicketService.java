@@ -71,12 +71,6 @@ public class TicketService {
 		repo.delete(ticketToDelete);
 		
 	}
-
-	public List<Ticket> getByCategory(String category) {
-	
-		return repo.findByCategory(category);
-		
-	}
 	
 	public List<Ticket> getByStatus(String category) {
 		

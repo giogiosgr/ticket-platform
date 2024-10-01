@@ -39,8 +39,9 @@
 						<div class="mb-3">
 							<label for="category" class="form-label">Scegli la categoria</label>
 							<select class="form-select" id="category" th:field="*{category}">
-								<option value="Gestionale">Gestionale</option>
-								<option value="Hardware">Hardware</option>
+								<th:block th:each="category : ${categories}">
+									<option th:value="${category.id}">[[${category.name}]]</option>
+								</th:block>
 							</select>
 						</div>
 						<div class="mb-3">

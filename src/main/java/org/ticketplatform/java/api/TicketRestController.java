@@ -45,11 +45,13 @@ public class TicketRestController {
 		return result;
 	}
 
+	/*
 	@GetMapping("/category/{category}")
 	public List<Ticket> showByCategory(@PathVariable String category) {
 
 		return ticketService.getByCategory(category);
 	}
+	*/
 
 	@GetMapping("/status/{status}")
 	public List<Ticket> showByStatus(@PathVariable String status) {

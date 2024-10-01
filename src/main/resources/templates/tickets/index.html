@@ -55,7 +55,7 @@
 						<tr th:each="ticket : ${tickets}">
 							<td th:text="${ticket.id}" class="fw-bold"></td>
 							<td th:text="${ticket.title}"></td>
-							<td th:text="${ticket.category}"></td>
+							<td th:text="${ticket.category.name}"></td>
 							<td th:text="${ticket.status}"></td>
 							<td th:text="${ticket.getFormattedCreatedAt()}"></td>
 							<td th:text="${ticket.getFormattedUpdatedAt()}"></td>
@@ -65,7 +65,7 @@
 									role="button">Visualizza</a>
 								<a class="btn btn-sm btn-warning m-1"
 									th:href="@{'http://localhost:8080/tickets/edit/{id}'(id=${ticket.id})}"
-									role="button">Aggiorna</a>
+									role="button">Modifica</a>
 								<th:block sec:authorize="hasAuthority('ADMIN')">
 									<!-- Button trigger modal -->
 									<button type="button" class="btn btn-sm btn-danger m-1" data-bs-toggle="modal"

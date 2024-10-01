@@ -18,7 +18,7 @@
 				th:text="'Ticket #' + ${ticket.id} + ' - operatore: ' + ${ticket.user.username}">
 			</h4>
 			<p class="ms-4 my-2"><span class="fw-bold">Titolo: </span>[[${ticket.title}]]</p>
-			<p class="ms-4 my-2"><span class="fw-bold">Categoria: </span>[[${ticket.category}]]</p>
+			<p class="ms-4 my-2"><span class="fw-bold">Categoria: </span>[[${ticket.category.name}]]</p>
 			<p class="ms-4 my-2"><span class="fw-bold">Stato: </span>[[${ticket.status}]]</p>
 			<p class="ms-4 my-2"><span class="fw-bold">Creato il: </span>[[${ticket.getFormattedCreatedAt()}]]</p>
 			<p class="ms-4 my-2"><span class="fw-bold">Ultimo aggiornamento:
