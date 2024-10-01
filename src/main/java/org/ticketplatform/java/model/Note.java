@@ -43,13 +43,13 @@ public class Note {
 	private LocalDateTime updatedAt;
 
 	@ManyToOne
-	@JoinColumn(name = "ticket_id", nullable = false, unique = true)
+	@JoinColumn(name = "ticket_id", nullable = false)
 	@JsonBackReference
 	private Ticket ticket;
 	
 	@ManyToOne
 	@JsonBackReference
-	@JoinColumn(name = "user_id", nullable = false, unique = true)
+	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 
 	// getters e setters
