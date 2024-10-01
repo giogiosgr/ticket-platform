@@ -1,5 +1,6 @@
 package org.ticketplatform.java.api;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,18 +46,23 @@ public class TicketRestController {
 		return result;
 	}
 
-	/*
 	@GetMapping("/category/{category}")
-	public List<Ticket> showByCategory(@PathVariable String category) {
+	public List<Ticket> filterByCategory(@PathVariable String category) {
 
-		return ticketService.getByCategory(category);
+		List<Ticket> listByCategory = new ArrayList<>();
+		for (Ticket ticket : ticketService.getAll()) {
+			if (ticket.getCategory().getName().toLowerCase().equals(category.toLowerCase())) {
+				listByCategory.add(ticket);
+			}
+		}
+
+		return listByCategory;
 	}
-	*/
 
 	@GetMapping("/status/{status}")
-	public List<Ticket> showByStatus(@PathVariable String status) {
+	public List<Ticket> filterByStatus(@PathVariable String status) {
 
-		return ticketService.getByStatus(status);	
+		return ticketService.getByStatus(status);
 	}
 
 }
