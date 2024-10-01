@@ -5,7 +5,8 @@
     box-sizing: border-box;
 }
 
-/* SELEZIONE FONT DEL BODY */
+/* SELEZIONE FONT E BACKGROUND COLOR DEL BODY */
 body {
     font-family: Roboto, Arial;
+	background-color: azure;
 }
