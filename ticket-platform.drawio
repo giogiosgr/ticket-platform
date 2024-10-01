@@ -216,7 +216,7 @@
           <mxGeometry x="430" y="170" width="30" height="30" as="geometry" />
         </mxCell>
         <mxCell id="Iv4Y6c-sv0pPElinfw1h-50" value="N" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="760" y="210" width="30" height="30" as="geometry" />
+          <mxGeometry x="827" y="210" width="30" height="30" as="geometry" />
         </mxCell>
         <mxCell id="Iv4Y6c-sv0pPElinfw1h-51" value="notes" style="shape=table;startSize=29;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;html=1;" parent="1" vertex="1">
           <mxGeometry x="500" y="-150" width="300" height="261" as="geometry">
@@ -302,7 +302,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="Iv4Y6c-sv0pPElinfw1h-88" value="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="830" y="170" width="30" height="30" as="geometry" />
+          <mxGeometry x="827" y="170" width="30" height="30" as="geometry" />
         </mxCell>
         <mxCell id="Iv4Y6c-sv0pPElinfw1h-112" value="roles" style="shape=table;startSize=29;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;html=1;" parent="1" vertex="1">
           <mxGeometry x="-440" y="160" width="290" height="100" as="geometry">
