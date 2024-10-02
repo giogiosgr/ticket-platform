@@ -42,19 +42,46 @@
 				<table class="table table-striped table-hover mt-2">
 					<thead>
 						<tr>
-							<th class="fs-5"><a th:href="@{/tickets(sortField='id', sortDir=${reverseSortDir})}">ID</a></th>
-							<th class="fs-5"><a th:href="@{/tickets(sortField='title', sortDir=${reverseSortDir})}">Titolo</a></th>
-							<th class="fs-5"><a th:href="@{/tickets(sortField='category', sortDir=${reverseSortDir})}">Categoria</a></th>
-							<th class="fs-5"><a th:href="@{/tickets(sortField='user', sortDir=${reverseSortDir})}">Operatore</a></th>
-							<th class="fs-5"><a th:href="@{/tickets(sortField='status', sortDir=${reverseSortDir})}">Stato</a></th>
-							<th class="fs-5"><a th:href="@{/tickets(sortField='createdAt', sortDir=${reverseSortDir})}">Creato il</a></th>
-							<th class="fs-5"><a th:href="@{/tickets(sortField='updatedAt', sortDir=${reverseSortDir})}">Ultimo aggiornamento</a></th>
+							<th class="fs-5"><a th:href="@{/tickets(sortField='id', sortDir=${reverseSortDir})}"
+									style="color: black; text-decoration: none;">ID<span th:if="${sortField == 'id'}"><i
+											th:classappend="${sortDir == 'asc'} ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i></span></a>
+							</th>
+							<th class="fs-5"><a th:href="@{/tickets(sortField='title', sortDir=${reverseSortDir})}"
+									style="color: black; text-decoration: none;">Titolo<span
+										th:if="${sortField == 'title'}"><i
+											th:classappend="${sortDir == 'asc'} ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i></span></a>
+							</th>
+							<th class="fs-5"><a th:href="@{/tickets(sortField='category', sortDir=${reverseSortDir})}"
+									style="color: black; text-decoration: none;">Categoria <span
+										th:if="${sortField == 'category'}"><i
+											th:classappend="${sortDir == 'asc'} ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i></span></a>
+							</th>
+							<th class="fs-5"><a th:href="@{/tickets(sortField='user', sortDir=${reverseSortDir})}"
+									style="color: black; text-decoration: none;">Operatore <span
+										th:if="${sortField == 'user'}"><i
+											th:classappend="${sortDir == 'asc'} ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i></span></a>
+							</th>
+							<th class="fs-5"><a th:href="@{/tickets(sortField='status', sortDir=${reverseSortDir})}"
+									style="color: black; text-decoration: none;">Stato <span
+										th:if="${sortField == 'status'}"><i
+											th:classappend="${sortDir == 'asc'} ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i></span></a>
+							</th>
+							<th class="fs-5"><a th:href="@{/tickets(sortField='createdAt', sortDir=${reverseSortDir})}"
+									style="color: black; text-decoration: none;">Creato il <span
+										th:if="${sortField == 'createdAt'}"><i
+											th:classappend="${sortDir == 'asc'} ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i></span></a>
+							</th>
+							<th class="fs-5"><a th:href="@{/tickets(sortField='updatedAt', sortDir=${reverseSortDir})}"
+									style="color: black; text-decoration: none;">Ultimo aggiornamento <span
+										th:if="${sortField == 'updatedAt'}"><i
+											th:classappend="${sortDir == 'asc'} ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i></span></a>
+							</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="ticket : ${tickets}">
 							<th:block th:if="${isAdmin == true} or ${ticket.user.id} == ${loggedUser.id}">
-							    <td th:text=" ${ticket.id}" class="fw-bold">
+								<td th:text=" ${ticket.id}" class="fw-bold">
 								</td>
 								<td><a th:href="@{'/tickets/show/{id}'(id=${ticket.id})}" th:text="${ticket.title}"
 										style="text-decoration: none;"></a></td>

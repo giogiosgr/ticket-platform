@@ -143,7 +143,7 @@ public class TicketController {
 
 		ticketService.save(ticketForm);
 
-		attributes.addFlashAttribute("successMessage", "ticket " + ticketForm.getId() + " creato con successo");
+		attributes.addFlashAttribute("successMessage", "ticket #" + ticketForm.getId() + " creato con successo");
 
 		return "redirect:/tickets";
 	}
@@ -180,7 +180,7 @@ public class TicketController {
 
 		ticketService.save(ticketForm);
 
-		attributes.addFlashAttribute("successMessage", "ticket " + ticketForm.getId() + " aggiornato con successo");
+		attributes.addFlashAttribute("successMessage", "ticket #" + ticketForm.getId() + " aggiornato con successo");
 
 		return "redirect:/tickets/show/" + ticketForm.getId();
 	}
