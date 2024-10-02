@@ -167,9 +167,9 @@ public class TicketController {
 
 		ticketService.save(ticketForm);
 
-		attributes.addFlashAttribute("successMessage", "ticket " + ticketForm.getId() + " modificato con successo");
+		attributes.addFlashAttribute("successMessage", "ticket " + ticketForm.getId() + " aggiornato con successo");
 
-		return "redirect:/tickets";
+		return "redirect:/tickets/show/" + ticketForm.getId();
 	}
 	
 	// DELETE

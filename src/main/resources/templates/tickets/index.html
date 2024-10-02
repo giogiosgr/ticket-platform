@@ -45,62 +45,22 @@
 							<th class="fs-5">ID</th>
 							<th class="fs-5">Titolo</th>
 							<th class="fs-5">Categoria</th>
+							<th class="fs-5">Assegnato a</th>
 							<th class="fs-5">Stato</th>
 							<th class="fs-5">Creato il</th>
 							<th class="fs-5">Ultimo aggiornamento</th>
-							<th class="fs-5 text-center">Azioni</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="ticket : ${tickets}">
 							<td th:text="${ticket.id}" class="fw-bold"></td>
-							<td th:text="${ticket.title}"></td>
+							<td><a th:href="@{'/tickets/show/{id}'(id=${ticket.id})}"
+									th:text="${ticket.title}" style="text-decoration: none;" ></a></td>
 							<td th:text="${ticket.category.name}"></td>
+							<td th:text="${ticket.user.username}"></td>
 							<td th:text="${ticket.status}"></td>
 							<td th:text="${ticket.getFormattedCreatedAt()}"></td>
 							<td th:text="${ticket.getFormattedUpdatedAt()}"></td>
-							<td class="text-center p-1">
-								<a class="btn btn-sm btn-primary m-1"
-									th:href="@{'http://localhost:8080/tickets/show/{id}'(id=${ticket.id})}"
-									role="button">Visualizza</a>
-								<a class="btn btn-sm btn-warning m-1"
-									th:href="@{'http://localhost:8080/tickets/edit/{id}'(id=${ticket.id})}"
-									role="button">Modifica</a>
-								<th:block sec:authorize="hasAuthority('ADMIN')">
-									<!-- Button trigger modal -->
-									<button type="button" class="btn btn-sm btn-danger m-1" data-bs-toggle="modal"
-										th:data-bs-target="'#delete-' + ${ticket.id}">
-										Cancella
-									</button>
-									<!-- Modal -->
-									<div class="modal fade" th:id="'delete-' + ${ticket.id}" tabindex="-1"
-										aria-labelledby="exampleModalLabel" aria-hidden="true">
-										<div class="modal-dialog">
-											<div class="modal-content">
-												<div class="modal-header">
-													<h1 class="modal-title fs-5" id="exampleModalLabel">Conferma
-														cancellazione</h1>
-													<button type="button" class="btn-close" data-bs-dismiss="modal"
-														aria-label="Close"></button>
-												</div>
-												<div class="modal-body text-center">
-													Sei sicuro di voler eliminare il ticket [[ ${ticket.title} ]]?
-												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-secondary"
-														data-bs-dismiss="modal">Annulla</button>
-													<form class="d-inline-block"
-														th:action="@{http://localhost:8080/tickets/delete/{id}(id=${ticket.id})}"
-														method="POST">
-														<button class="btn btn-danger m-1" type="submit"
-															id="submitButton">Conferma</button>
-													</form>
-												</div>
-											</div>
-										</div>
-									</div>
-								</th:block>
-							</td>
 						</tr>
 					</tbody>
 				</table>

@@ -14,7 +14,8 @@
 				<div th:replace="~{fragments/fragments :: successAlert(${successMessage})}"></div>
 			</th:block>
 
-			<div class="col-7">
+			<!-- Descrizione Ticket e note -->
+			<div class="col-6">
 				<div class="card text-bg-primary p-1 mx-4 my-3">
 					<div class="card-body">
 						<h4 class="card-title pb-1 border-bottom">Descrizione del ticket:</h4>
@@ -25,7 +26,6 @@
 						</div>
 					</div>
 				</div>
-				<!-- Note -->
 				<th:block th:each="note : ${ticket.notes}">
 					<div class="card text-bg-success p-1 mx-4 my-3">
 						<div class="card-body">
@@ -80,18 +80,54 @@
 					</div>
 				</th:block>
 			</div>
-
-			<div class="col-5">
+			<!-- Info Ticket -->
+			<div class="col-6">
 				<h4 class="fw-bold ms-4 my-2"
-					th:text="'Ticket #' + ${ticket.id} + ' - operatore: ' + ${ticket.user.username}">
+					th:text="'Ticket #' + ${ticket.id} + ' - ' + ${ticket.title} + ' - operatore: ' + ${ticket.user.username}">
 				</h4>
-				<p class="ms-4 my-2"><span class="fw-bold">Titolo: </span>[[${ticket.title}]]</p>
 				<p class="ms-4 my-2"><span class="fw-bold">Categoria: </span>[[${ticket.category.name}]]</p>
 				<p class="ms-4 my-2"><span class="fw-bold">Stato: </span>[[${ticket.status}]]</p>
 				<p class="ms-4 my-2"><span class="fw-bold">Creato il: </span>[[${ticket.getFormattedCreatedAt()}]]</p>
 				<p class="ms-4 my-2"><span class="fw-bold">Ultimo aggiornamento:
 					</span>[[${ticket.getFormattedUpdatedAt()}]]
 				</p>
+				<div class="m-4">
+					<a class="btn btn-warning m-1" th:href="@{'/tickets/edit/{id}'(id=${ticket.id})}"
+						role="button">Modifica</a>
+					<th:block sec:authorize="hasAuthority('ADMIN')">
+						<!-- Button trigger modal -->
+						<button type="button" class="btn btn-danger m-1" data-bs-toggle="modal"
+							th:data-bs-target="'#delete-' + ${ticket.id}">
+							Elimina Ticket
+						</button>
+						<!-- Modal -->
+						<div class="modal fade" th:id="'delete-' + ${ticket.id}" tabindex="-1"
+							aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h1 class="modal-title fs-5" id="exampleModalLabel">Conferma
+											cancellazione</h1>
+										<button type="button" class="btn-close" data-bs-dismiss="modal"
+											aria-label="Close"></button>
+									</div>
+									<div class="modal-body text-center">
+										Sei sicuro di voler eliminare il ticket?
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary"
+											data-bs-dismiss="modal">Annulla</button>
+										<form class="d-inline-block"
+											th:action="@{/tickets/delete/{id}(id=${ticket.id})}" method="POST">
+											<button class="btn btn-danger m-1" type="submit"
+												id="submitButton">Conferma</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</th:block>
+				</div>
 			</div>
 
 		</div>

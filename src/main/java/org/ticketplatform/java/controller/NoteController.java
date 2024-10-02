@@ -108,7 +108,7 @@ public class NoteController {
 		// update dell'orario di ultima modifica del ticket a cui appartiene la nota aggiornata
 		ticketService.update(ticketService.getById(ticketID));
 
-		attributes.addFlashAttribute("successMessage", "nota al ticket #" + ticketID + " modificata con successo");
+		attributes.addFlashAttribute("successMessage", "nota al ticket #" + ticketID + " aggiornata con successo");
 
 		return ("redirect:/tickets/show/" + ticketID);
 	}
