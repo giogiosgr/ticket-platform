@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.ticketplatform.java.model.Ticket;
 import org.ticketplatform.java.repo.TicketRepository;
@@ -34,6 +35,13 @@ public class TicketService {
 		return repo.findAll();
 
 	}
+	
+	public Object getAll(Sort sort) {
+		
+		return repo.findAll(sort);
+		
+	}
+
 
 	public List<Ticket> getByTitleWithOrderByTitle(String title) {
 
