@@ -34,27 +34,31 @@ public class TicketController {
 
 	@Autowired
 	TicketService ticketService;
-	
+
 	@Autowired
 	CategoryService categoryService;
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	// INDEX
 	@GetMapping()
 	public String index(Authentication authentication, Model model) {
 
-		// consegna della lista di tickets alla index a seconda dello user loggato (ruolo e identità).
-		// Un admin vedrà tutti i ticket.
+		// Consegna della lista di tickets alla index
+		// Un admin vedrà tutti i ticket
 		// Un operatore vedrà soltanto i ticket a lui assegnati
-		
+		// I compare su Ruolo e Identità avverranno su Thymeleaf passando i dovuti valori al modello
+
+		boolean isAdmin = false;
+
 		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
-			model.addAttribute("tickets", ticketService.getAll());
-			return "/tickets/index";
+			isAdmin = true;
 		}
-		
-		model.addAttribute("tickets", userService.getByUsername(authentication.getName()).getTickets());
+
+		model.addAttribute("tickets", ticketService.getAll());
+		model.addAttribute("loggedUser", userService.getByUsername(authentication.getName()));
+		model.addAttribute("isAdmin", isAdmin);
 
 		return "/tickets/index";
 	}
@@ -62,25 +66,18 @@ public class TicketController {
 	// SEARCH
 	@GetMapping("/search")
 	public String search(@RequestParam String title, Authentication authentication, Model model) {
-		
-		// il principio di passaggio è lo stesso della index ma si agisce sulla lista ordinata per nome
-		
-		List<Ticket> orderedTickets = ticketService.getByTitleWithOrderByTitle(title);
-		
+
+		// il principio di passaggio è lo stesso della index ma si agisce sulla lista filtrata per nome
+
+		boolean isAdmin = false;
+
 		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
-			model.addAttribute("tickets", orderedTickets);
-			return "/tickets/index";
+			isAdmin = true;
 		}
-        
-		List<Ticket> ownedTickets = userService.getByUsername(authentication.getName()).getTickets();
-		List<Ticket> ownedOrderedTickets = new ArrayList<>();
-		for (Ticket ticket : orderedTickets) {
-			if (ownedTickets.contains(ticket)) {
-				ownedOrderedTickets.add(ticket);
-			}
-		}
-		
-		model.addAttribute("tickets", ownedOrderedTickets);
+
+		model.addAttribute("tickets", ticketService.getByTitleWithOrderByTitle(title));
+		model.addAttribute("loggedUser", userService.getByUsername(authentication.getName()));
+		model.addAttribute("isAdmin", isAdmin);
 
 		return "/tickets/index";
 	}
@@ -88,15 +85,16 @@ public class TicketController {
 	// SHOW
 	@GetMapping("/show/{id}")
 	public String show(@PathVariable int id, Authentication authentication, Model model) {
-		
-		// all'operatore a cui non è assegnata la risorsa viene restituita una pagina di errore
+
+		// all'operatore a cui non è assegnata la risorsa viene restituita una pagina di
+		// errore
 
 		Ticket ticketToShow = ticketService.getById(id);
-		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("OPERATOR")) &&
-				!userService.getByUsername(authentication.getName()).getTickets().contains(ticketToShow)) {		
+		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("OPERATOR"))
+				&& !userService.getByUsername(authentication.getName()).getTickets().contains(ticketToShow)) {
 			return "/pages/authError";
 		}
-		
+
 		model.addAttribute("ticket", ticketToShow);
 
 		return "/tickets/show";
@@ -106,14 +104,15 @@ public class TicketController {
 	@GetMapping("/create")
 	public String create(Model model) {
 
-		// creazione nuovo ticket a cui viene settato lo status predefinito "da fare" prima della consegna al model
+		// creazione nuovo ticket a cui viene settato lo status predefinito "da fare"
+		// prima della consegna al model
 		Ticket newTicket = new Ticket();
 		newTicket.setStatus("da fare");
-		
+
 		model.addAttribute("ticket", newTicket);
 		model.addAttribute("operators", userService.getAll());
 		model.addAttribute("categories", categoryService.getAll());
-		
+
 		return "/tickets/create";
 	}
 
@@ -138,12 +137,13 @@ public class TicketController {
 	// EDIT
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable int id, Authentication authentication, Model model) {
-		
-		// all'operatore a cui non è assegnata la risorsa viene restituita una pagina di errore
+
+		// all'operatore a cui non è assegnata la risorsa viene restituita una pagina di
+		// errore
 
 		Ticket ticketToEdit = ticketService.getById(id);
-		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("OPERATOR")) &&
-			!userService.getByUsername(authentication.getName()).getTickets().contains(ticketToEdit)) {		
+		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("OPERATOR"))
+				&& !userService.getByUsername(authentication.getName()).getTickets().contains(ticketToEdit)) {
 			return "/pages/authError";
 		}
 
@@ -171,15 +171,15 @@ public class TicketController {
 
 		return "redirect:/tickets/show/" + ticketForm.getId();
 	}
-	
+
 	// DELETE
 	@PostMapping("/delete/{id}")
 	public String delete(@PathVariable int id, RedirectAttributes attributes) {
-		
+
 		ticketService.deleteById(id);
-		
+
 		attributes.addFlashAttribute("successMessage", "ticket #" + id + " eliminato con successo");
-		
+
 		return "redirect:/tickets";
 	}
 

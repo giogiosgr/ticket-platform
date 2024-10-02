@@ -53,14 +53,17 @@
 					</thead>
 					<tbody>
 						<tr th:each="ticket : ${tickets}">
-							<td th:text="${ticket.id}" class="fw-bold"></td>
-							<td><a th:href="@{'/tickets/show/{id}'(id=${ticket.id})}"
-									th:text="${ticket.title}" style="text-decoration: none;" ></a></td>
-							<td th:text="${ticket.category.name}"></td>
-							<td th:text="${ticket.user.username}"></td>
-							<td th:text="${ticket.status}"></td>
-							<td th:text="${ticket.getFormattedCreatedAt()}"></td>
-							<td th:text="${ticket.getFormattedUpdatedAt()}"></td>
+							<th:block th:if="${isAdmin == true} or ${ticket.user.id} == ${loggedUser.id}">
+							    <td th:text=" ${ticket.id}" class="fw-bold">
+								</td>
+								<td><a th:href="@{'/tickets/show/{id}'(id=${ticket.id})}" th:text="${ticket.title}"
+										style="text-decoration: none;"></a></td>
+								<td th:text="${ticket.category.name}"></td>
+								<td th:text="${ticket.user.username}"></td>
+								<td th:text="${ticket.status}"></td>
+								<td th:text="${ticket.getFormattedCreatedAt()}"></td>
+								<td th:text="${ticket.getFormattedUpdatedAt()}"></td>
+							</th:block>
 						</tr>
 					</tbody>
 				</table>
