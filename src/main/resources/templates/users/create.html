@@ -8,7 +8,12 @@
 	<header th:insert="~{fragments/fragments :: navbar('create')}"></header>
 
 	<main class="container">
-		<h2 class="my-4">CREAZIONE USER OPERATORE</h2>
+
+		<th:block th:if="${notSuccessMessage != null}">
+			<div th:replace="~{fragments/fragments :: notSuccessAlert(${notSuccessMessage})}"></div>
+		</th:block>
+
+		<h2 class="my-4">CREAZIONE OPERATORE</h2>
 		<div class="row">
 			<div class="col-6">
 				<form id="user-form" th:object="${user}" th:action="@{/users/create}" method="POST">
@@ -35,6 +40,7 @@
 					<button type="submit" class="btn btn-primary m-2">Conferma Inserimento</button>
 					<button type="reset" class="btn btn-primary m-2">Reset</button>
 					<!-- Fields nascosti -->
+					<input type="hidden" th:field="*{roles}">
 					<input type="hidden" th:field="*{status}">
 					<input type="hidden" th:field="*{email}">
 				</form>

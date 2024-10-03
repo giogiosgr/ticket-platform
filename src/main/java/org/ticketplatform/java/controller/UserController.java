@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,11 +50,9 @@ public class UserController {
 	@PostMapping("/edit")
 	public String update(Authentication authentication, RedirectAttributes attributes) {
 
-		// Si recupera l'operatore loggato per switchare lo status, con i seguenti
-		// vincoli:
+		// Si recupera l'operatore loggato per switchare lo status, con i seguenti vincoli:
 		// 1 - non può attivare lo stato "non attivo" se ha ticket aperti assegnati
-		// 2 - non può attivare lo stato "non attivo" se è l'unico operatore ancora
-		// attivo
+		// 2 - non può attivare lo stato "non attivo" se è l'unico operatore ancora  attivo
 
 		User userToUpdate = userService.getByUsername(authentication.getName());
 		boolean userStatus = userToUpdate.isStatus();
@@ -85,7 +84,7 @@ public class UserController {
 		return "redirect:/users/show";
 	}
 
-	// CREATE (nuovo operatore)
+	// CREATE (nuovo user con ruolo operatore)
 	@GetMapping("/create")
 	public String create(Model model) {
 
@@ -103,7 +102,7 @@ public class UserController {
 		return "/users/create";
 	}
 
-	// STORE (nuovo operatore)
+	// STORE (nuovo user con ruolo operatore)
 	@PostMapping("/create")
 	public String store(@Valid @ModelAttribute("user") User userForm, BindingResult bindingResult, Model model,
 			RedirectAttributes attributes) {
@@ -115,11 +114,14 @@ public class UserController {
 	    userForm.setPassword("{noop}" + userForm.getPassword());
 	    userForm.setEmail(userForm.getUsername() + "@ticketplatform.com");
 
-		userService.save(userForm);
-
-		attributes.addFlashAttribute("successMessage", "user #" + userForm.getUsername() + " creato con successo");
-
-		return "redirect:/users/show";
+	    try {
+	        userService.createUser(userForm);
+	        attributes.addFlashAttribute("successMessage", "operatore '" + userForm.getUsername() + "' creato con successo");
+	        return "redirect:/users/show";
+	    } catch (Exception e) {
+	    	attributes.addFlashAttribute("notSuccessMessage", e.getMessage());
+	    	return "redirect:/users/create";
+	    }
 	}
 
 }
