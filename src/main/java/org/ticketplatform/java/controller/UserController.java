@@ -59,7 +59,7 @@ public class UserController {
 
 		if (userToUpdate.getOngoingTickets() > 0) {
 			attributes.addFlashAttribute("notSuccessMessage",
-					"Non puoi passare allo stato 'non disponibile' se hai ticket aperti");
+					"Non puoi passare allo stato 'non disponibile' se hai ticket non completati");
 			return "redirect:/users/show";
 		}
 
