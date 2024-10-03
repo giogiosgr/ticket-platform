@@ -41,11 +41,11 @@
 			<th:block sec:authorize="hasAuthority('OPERATOR')">
 				<div class="col-7 mt-3">
 					<th:block th:if="${user.status} == true">
-						<div class="text-bg-success rounded-3 text-center p-2" style="width: 15rem;">DISPONIBILE
+						<div class="text-bg-success rounded-3 text-center p-2" style="width: 15rem;">STATO: DISPONIBILE
 						</div>
 					</th:block>
 					<th:block th:if="${user.status} == false">
-						<div class="text-bg-danger rounded-3 text-center p-2" style="width: 15rem;">NON DISPONIBILE
+						<div class="text-bg-danger rounded-3 text-center p-2" style="width: 15rem;">STATO: NON DISPONIBILE
 						</div>
 					</th:block>
 					<form id="user-form" th:action="@{/users/edit}" method="POST">
