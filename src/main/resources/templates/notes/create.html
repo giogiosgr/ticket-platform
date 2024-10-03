@@ -14,8 +14,8 @@
 				<form id="note-form" th:object="${note}" th:action="@{/notes/create}" method="POST">
 					<div class="mb-3">
 						<label for="text" class="form-label">Testo della nota</label>
-						<textarea name="text" class="form-control" id="text" rows="4" th:field="*{text}"
-							th:errorClass="is-invalid">
+						<textarea name="text" class="form-control" id="text" rows="4" required minlength="2"
+							maxlength="5000" th:field="*{text}" th:errorClass="is-invalid">
 						</textarea>
 						<div th:if="${#fields.hasErrors('text')}" class="invalid-feedback">
 							<ul>

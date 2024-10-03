@@ -37,11 +37,13 @@ public class User {
 	private Integer id;
 	
 	@NotNull
-	@Size(max=50)
+	@NotEmpty
+	@Size(min = 2, max=50)
 	@Column(name = "username", length=50, nullable = false, unique = true)
 	private String username;
 	
 	@NotNull
+	@NotEmpty
 	@Size(max=50)
 	@Column(name = "password", length=50, nullable = false)
 	private String password;

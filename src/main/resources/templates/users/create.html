@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/fragments :: head('crea')}"></head>
+
+<body>
+
+	<header th:insert="~{fragments/fragments :: navbar('create')}"></header>
+
+	<main class="container">
+		<h2 class="my-4">CREAZIONE USER OPERATORE</h2>
+		<div class="row">
+			<div class="col-6">
+				<form id="user-form" th:object="${user}" th:action="@{/users/create}" method="POST">
+					<div class="mb-3">
+						<label for="username" class="form-label">Username</label>
+						<input name="username" type="text" class="form-control" id="username" required minlength="2"
+							maxlength="10" th:field="*{username}" th:errorClass="is-invalid">
+						<div th:if="${#fields.hasErrors('username')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('username')}" th:text="${err}"></li>
+							</ul>
+						</div>
+					</div>
+					<div class="mb-3">
+						<label for="password" class="form-label">Password</label>
+						<input name="password" type="password" class="form-control" id="password" required
+							maxlength="50" th:field="*{password}" th:errorClass="is-invalid">
+						<div th:if="${#fields.hasErrors('password')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('password')}" th:text="${err}"></li>
+							</ul>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary m-2">Conferma Inserimento</button>
+					<button type="reset" class="btn btn-primary m-2">Reset</button>
+					<!-- Fields nascosti -->
+					<input type="hidden" th:field="*{status}">
+					<input type="hidden" th:field="*{email}">
+				</form>
+			</div>
+		</div>
+	</main>
+
+	<footer>
+		<th:block th:replace="~{fragments/fragments :: scripts}"></th:block>
+	</footer>
+
+</body>
+
+</html>

@@ -17,8 +17,8 @@
 					<th:block sec:authorize="hasAuthority('ADMIN')">
 						<div class="mb-3">
 							<label for="title" class="form-label">Titolo ticket</label>
-							<input name="title" type="text" class="form-control" id="title" th:field="*{title}"
-								th:errorClass="is-invalid">
+							<input name="title" type="text" class="form-control" id="title" required minlength="2"
+								maxlength="255" th:field="*{title}" th:errorClass="is-invalid">
 							<div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
 								<ul>
 									<li th:each="err : ${#fields.errors('title')}" th:text="${err}"></li>
@@ -27,7 +27,7 @@
 						</div>
 						<div class="mb-3">
 							<label for="description" class="form-label">Descrizione ticket</label>
-							<textarea name="description" class="form-control" id="description" rows="4"
+							<textarea name="description" class="form-control" id="description" rows="4" maxlength="5000"
 								th:field="*{description}" th:errorClass="is-invalid">
 						</textarea>
 							<div th:if="${#fields.hasErrors('description')}" class="invalid-feedback">

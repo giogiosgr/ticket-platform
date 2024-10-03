@@ -1,16 +1,28 @@
 package org.ticketplatform.java.controller;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.ticketplatform.java.model.User;
+import org.ticketplatform.java.repo.RoleRepository;
+import org.ticketplatform.java.model.Role;
+import org.ticketplatform.java.model.Ticket;
 import org.ticketplatform.java.service.UserService;
+
+import jakarta.validation.Valid;
 
 @SuppressWarnings("unused")
 
@@ -21,6 +33,9 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
+	@Autowired
+	RoleRepository roleRepo;
+
 	// SHOW
 	@GetMapping("/show")
 	public String show(Authentication authentication, Model model) {
@@ -30,13 +45,15 @@ public class UserController {
 		return "/users/show";
 	}
 
-	// UPDATE
+	// UPDATE (status operatore)
 	@PostMapping("/edit")
 	public String update(Authentication authentication, RedirectAttributes attributes) {
 
-		// Si recupera l'operatore loggato per switchare lo status, con i seguenti vincoli:
+		// Si recupera l'operatore loggato per switchare lo status, con i seguenti
+		// vincoli:
 		// 1 - non può attivare lo stato "non attivo" se ha ticket aperti assegnati
-		// 2 - non può attivare lo stato "non attivo" se è l'unico operatore ancora attivo
+		// 2 - non può attivare lo stato "non attivo" se è l'unico operatore ancora
+		// attivo
 
 		User userToUpdate = userService.getByUsername(authentication.getName());
 		boolean userStatus = userToUpdate.isStatus();
@@ -60,10 +77,47 @@ public class UserController {
 				return "redirect:/users/show";
 			}
 		}
-		
+
 		userToUpdate.setStatus(!userStatus);
 
 		userService.save(userToUpdate);
+
+		return "redirect:/users/show";
+	}
+
+	// CREATE (nuovo operatore)
+	@GetMapping("/create")
+	public String create(Model model) {
+
+		User newUser = new User();
+
+		Set<Role> newRoles = new HashSet<>();
+		newRoles.add(roleRepo.findById(2).get());
+
+		newUser.setRoles(newRoles);
+		newUser.setStatus(true);
+		newUser.setEmail("temp");
+
+		model.addAttribute("user", newUser);
+
+		return "/users/create";
+	}
+
+	// STORE (nuovo operatore)
+	@PostMapping("/create")
+	public String store(@Valid @ModelAttribute("user") User userForm, BindingResult bindingResult, Model model,
+			RedirectAttributes attributes) {
+
+	    if (bindingResult.hasErrors()) {
+	        return "/users/create";
+	 	}
+	    
+	    userForm.setPassword("{noop}" + userForm.getPassword());
+	    userForm.setEmail(userForm.getUsername() + "@ticketplatform.com");
+
+		userService.save(userForm);
+
+		attributes.addFlashAttribute("successMessage", "user #" + userForm.getUsername() + " creato con successo");
 
 		return "redirect:/users/show";
 	}
