@@ -42,6 +42,12 @@ public class Category {
 	@Column(name = "name", length = 100, nullable = false, unique = true)
 	private String name;
 	
+	@CreationTimestamp
+	private LocalDateTime createdAt;
+	
+	@UpdateTimestamp
+	private LocalDateTime updatedAt;
+	
 	@OneToMany(mappedBy = "category", cascade = { CascadeType.REMOVE })
 	@JsonManagedReference
 	private List<Ticket> tickets;

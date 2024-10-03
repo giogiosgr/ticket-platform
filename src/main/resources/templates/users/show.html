@@ -45,7 +45,8 @@
 						</div>
 					</th:block>
 					<th:block th:if="${user.status} == false">
-						<div class="text-bg-danger rounded-3 text-center p-2" style="width: 15rem;">STATO: NON DISPONIBILE
+						<div class="text-bg-danger rounded-3 text-center p-2" style="width: 15rem;">STATO: NON
+							DISPONIBILE
 						</div>
 					</th:block>
 					<form id="user-form" th:action="@{/users/edit}" method="POST">
@@ -57,6 +58,10 @@
 			<th:block sec:authorize="hasAuthority('ADMIN')">
 				<div class="col-7 mt-3">
 					<a class="btn btn-primary m-1" th:href="@{/users/create}" role="button">Crea Operatore</a>
+				</div>
+				<div class="col-7 mt-3">
+					<a class="btn btn-primary m-1" th:href="@{http://localhost:8080/categories}" role="button">Gestisci
+						Categorie</a>
 				</div>
 			</th:block>
 		</div>
