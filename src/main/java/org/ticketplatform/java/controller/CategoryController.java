@@ -23,63 +23,85 @@ import jakarta.validation.Valid;
 @Controller
 @RequestMapping("/categories")
 public class CategoryController {
-	
+
 	@Autowired
 	CategoryService categoryService;
-	
+
 	@GetMapping()
 	public String index(Model model) {
 
-		
+		model.addAttribute("categories", categoryService.getAll());
 
-		return "/tickets/index";
+		return "/categories/index";
 	}
 
-
 	// CREATE
-	@GetMapping("/create/{id}")
-	public String create(@PathVariable int id, Authentication authentication, Model model) {
+	@GetMapping("/create")
+	public String create(Model model) {
 
-	
-		return "/notes/edit";
+		model.addAttribute("category", new Category());
+
+		return "/categories/create";
 	}
 
 	// STORE
 	@PostMapping("/create")
-	public String store(@Valid @ModelAttribute("note") Category noteForm, BindingResult bindingResult, Model model,
-			RedirectAttributes attributes) {
+	public String store(@Valid @ModelAttribute("category") Category categoryForm, BindingResult bindingResult,
+			Model model, RedirectAttributes attributes) {
 
-	
-		return "/notes/edit";
+		if (bindingResult.hasErrors()) {
+			return "/categories/create";
+		}
+
+		// gestione eccezione del caso di nome già appartenente ad una categoria
+		try {
+			categoryService.createUser(categoryForm);
+			attributes.addFlashAttribute("successMessage",
+					"categoria '" + categoryForm.getName() + "' creata con successo");
+			return "redirect:/categories";
+		} catch (Exception e) {
+			attributes.addFlashAttribute("notSuccessMessage", e.getMessage());
+			return "redirect:/categories/create";
+		}
+
 	}
 
 	// EDIT
 	@GetMapping("/edit/{id}")
-	public String edit(@PathVariable int id, Authentication authentication, Model model) {
-		
-		// allo user a cui non è assegnata la risorsa viene restituita una pagina di errore
-		
+	public String edit(@PathVariable int id, Model model) {
 
-		return "/notes/edit";
+		model.addAttribute("category", categoryService.getById(id));
+
+		return "/categories/edit";
 	}
 
 	// UPDATE
 	@PostMapping("/edit/{id}")
-	public String update(@Valid @ModelAttribute("note") Category noteForm, BindingResult bindingResult, Model model,
-			RedirectAttributes attributes) {
+	public String update(@Valid @ModelAttribute("category") Category categoryForm, BindingResult bindingResult,
+			@PathVariable int id, Model model, RedirectAttributes attributes) {
 
-	
+		if (bindingResult.hasErrors()) {
+			return "/categories/edit";
+		}
 
-		return "redirect:/tickets/show/";
+        categoryService.save(categoryForm);
+        
+        attributes.addFlashAttribute("successMessage", "categoria '" + categoryForm.getName() + "' modificata con successo");
+        
+        return "redirect:/categories";
 	}
 
 	// DELETE
 	@PostMapping("/delete/{id}")
 	public String delete(@PathVariable int id, Authentication authentication, RedirectAttributes attributes) {
 		
-	
+		Category categoryToDelete = categoryService.getById(id);
+		
+		categoryService.delete(categoryToDelete);
+		
+		attributes.addFlashAttribute("successMessage", "categoria '" + categoryToDelete.getName() + "' eliminata con successo");
 
-		return "redirect:/tickets/show/";
+		return "redirect:/categories";
 	}
 
 }

@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/fragments :: head('crea')}"></head>
+
+<body>
+
+	<header th:insert="~{fragments/fragments :: navbar('create')}"></header>
+
+	<main class="container">
+
+		<th:block th:if="${notSuccessMessage != null}">
+			<div th:replace="~{fragments/fragments :: notSuccessAlert(${notSuccessMessage})}"></div>
+		</th:block>
+
+		<h2 class="my-4">CREAZIONE CATEGORIA</h2>
+		<div class="row">
+			<div class="col-6">
+				<form id="category-form" th:object="${category}" th:action="@{/categories/create}" method="POST">
+					<div class="mb-3">
+						<label for="name" class="form-label">Nome categoria</label>
+						<input name="name" type="text" class="form-control" id="name" required minlength="2"
+							maxlength="100" th:field="*{name}" th:errorClass="is-invalid">
+						<div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+							</ul>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary m-2">Conferma Inserimento</button>
+					<button type="reset" class="btn btn-primary m-2">Reset</button>
+				</form>
+			</div>
+		</div>
+	</main>
+
+	<footer>
+		<th:block th:replace="~{fragments/fragments :: scripts}"></th:block>
+	</footer>
+
+</body>
+
+</html>

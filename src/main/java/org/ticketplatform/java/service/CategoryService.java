@@ -58,4 +58,16 @@ public class CategoryService {
 		
 	}
 
+	public Category createUser(Category category) throws Exception {
+		
+	    String name = category.getName();
+		
+		if (repo.existsByName(name)) {
+			throw new Exception("La categoria '" + name + "' esiste già nel Database");
+		}
+		
+		return repo.save(category);
+
+	}
+
 }

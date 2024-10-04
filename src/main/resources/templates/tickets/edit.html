@@ -8,82 +8,63 @@
 	<header th:insert="~{fragments/fragments :: navbar('edit')}"></header>
 
 	<main class="container">
+
 		<h2 class="my-4">MODIFICA TICKET</h2>
 		<div class="row">
 			<div class="col-6">
 				<form id="ticket-form" th:object="${ticket}" th:action="@{'/tickets/edit/{id}'(id=*{id})}"
 					method="POST">
-					<!-- versione del form per ruolo Admin -->
-					<th:block sec:authorize="hasAuthority('ADMIN')">
-						<div class="mb-3">
-							<label for="title" class="form-label">Titolo ticket</label>
-							<input name="title" type="text" class="form-control" id="title" required minlength="2"
-								maxlength="255" th:field="*{title}" th:errorClass="is-invalid">
-							<div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
-								<ul>
-									<li th:each="err : ${#fields.errors('title')}" th:text="${err}"></li>
-								</ul>
-							</div>
+					<div class="mb-3" th:classappend="${isAdmin == true} ? '' : 'd-none'">
+						<label for="title" class="form-label">Titolo ticket</label>
+						<input name="title" type="text" class="form-control" id="title" required minlength="2"
+							maxlength="255" th:field="*{title}" th:errorClass="is-invalid">
+						<div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('title')}" th:text="${err}"></li>
+							</ul>
 						</div>
-						<div class="mb-3">
-							<label for="description" class="form-label">Descrizione ticket</label>
-							<textarea name="description" class="form-control" id="description" rows="4" maxlength="5000"
-								th:field="*{description}" th:errorClass="is-invalid">
+					</div>
+					<div class="mb-3" th:classappend="${isAdmin == true} ? '' : 'd-none'">
+						<label for="description" class="form-label">Descrizione ticket</label>
+						<textarea name="description" class="form-control" id="description" rows="4" maxlength="5000"
+							th:field="*{description}" th:errorClass="is-invalid">
 						</textarea>
-							<div th:if="${#fields.hasErrors('description')}" class="invalid-feedback">
-								<ul>
-									<li th:each="err : ${#fields.errors('description')}" th:text="${err}"></li>
-								</ul>
-							</div>
+						<div th:if="${#fields.hasErrors('description')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('description')}" th:text="${err}"></li>
+							</ul>
 						</div>
-						<div class="mb-3">
-							<label for="category" class="form-label">Scegli la categoria</label>
-							<select class="form-select" id="category" th:field="*{category}">
-								<th:block th:each="category : ${categories}">
-									<option th:value="${category.id}">[[${category.name}]]</option>
+					</div>
+					<div class="mb-3" th:classappend="${isAdmin == true} ? '' : 'd-none'">
+						<label for="category" class="form-label">Scegli la categoria</label>
+						<select class="form-select" id="category" th:field="*{category}">
+							<th:block th:each="category : ${categories}">
+								<option th:value="${category.id}">[[${category.name}]]</option>
+							</th:block>
+						</select>
+					</div>
+					<div class="mb-3">
+						<label for="status" class="form-label">Stato</label>
+						<select class="form-select" id="status" th:field="*{status}">
+							<option value="da fare" selected>da fare</option>
+							<option value="in corso">in corso</option>
+							<option value="completato">completato</option>
+						</select>
+					</div>
+					<div class="mb-3" th:classappend="${isAdmin == true} ? '' : 'd-none'">
+						<label for="user" class="form-label">Assegnato a</label>
+						<select class="form-select" id="user" th:field="*{user}">
+							<th:block th:each="operator : ${operators}">
+								<th:block th:if="${operator.status} == true">
+									<option th:value="${operator.id}">[[${operator.username}]]</option>
 								</th:block>
-							</select>
-						</div>
-						<div class="mb-3">
-							<label for="status" class="form-label">Stato</label>
-							<select class="form-select" id="status" th:field="*{status}">
-								<option value="da fare" selected>da fare</option>
-								<option value="in corso">in corso</option>
-								<option value="completato">completato</option>
-							</select>
-						</div>
-						<div class="mb-3">
-							<label for="user" class="form-label">Assegnato a</label>
-							<select class="form-select" id="user" th:field="*{user}">
-								<th:block th:each="operator : ${operators}">
-									<th:block th:if="${operator.status} == true">
-										<option th:value="${operator.id}">[[${operator.username}]]</option>
-									</th:block>
-								</th:block>
-							</select>
-						</div>
-						<!-- Fields nascosti -->
-						<input type="hidden" th:field="*{createdAt}">
-					</th:block>
-					<!-- versione del form per ruolo Operator -->
-					<th:block sec:authorize="hasAuthority('OPERATOR')">
-						<div class="mb-3">
-							<label for="status" class="form-label">Stato</label>
-							<select class="form-select" id="status" th:field="*{status}">
-								<option value="da fare" selected>da fare</option>
-								<option value="in corso">in corso</option>
-								<option value="completato">completato</option>
-							</select>
-						</div>
-						<!-- Fields nascosti -->
-						<input type="hidden" th:field="*{title}">
-						<input type="hidden" th:field="*{createdAt}">
-						<input type="hidden" th:field="*{description}">
-						<input type="hidden" th:field="*{category}">
-						<input type="hidden" th:field="*{user}">
-					</th:block>
+							</th:block>
+						</select>
+					</div>
 					<button type="submit" class="btn btn-primary m-2">Conferma Inserimento</button>
 					<button type="reset" class="btn btn-primary m-2">Reset</button>
+					<!-- Fields nascosti -->
+					<input type="hidden" th:field="*{createdAt}">
 				</form>
 			</div>
 		</div>

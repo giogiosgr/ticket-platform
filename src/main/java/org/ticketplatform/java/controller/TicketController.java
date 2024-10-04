@@ -49,7 +49,7 @@ public class TicketController {
 		// Consegna della lista di tickets alla index
 		// Un admin vedrà tutti i ticket
 		// Un operatore vedrà soltanto i ticket a lui assegnati
-		// I compare su Ruolo e Identità avverranno su Thymeleaf passando i dovuti valori al modello
+		// I compare su Ruolo e Identità avverranno su Thymeleaf passando i necessari valori al modello
 
 		boolean isAdmin = false;
 		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
@@ -151,18 +151,24 @@ public class TicketController {
 	// EDIT
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable int id, Authentication authentication, Model model) {
-
+		
 		// all'operatore a cui non è assegnata la risorsa viene restituita una pagina di errore
-
 		Ticket ticketToEdit = ticketService.getById(id);
 		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("OPERATOR"))
 				&& !userService.getByUsername(authentication.getName()).getTickets().contains(ticketToEdit)) {
 			return "/pages/authError";
 		}
+		
+		// i campi disponibili nel form di edit varieranno a seconda del ruolo
+		boolean isAdmin = false;
+		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
+			isAdmin = true;
+		}
 
 		model.addAttribute("ticket", ticketToEdit);
 		model.addAttribute("operators", userService.getAll());
 		model.addAttribute("categories", categoryService.getAll());
+		model.addAttribute("isAdmin", isAdmin);
 
 		return "/tickets/edit";
 	}
