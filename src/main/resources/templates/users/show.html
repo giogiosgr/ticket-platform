@@ -44,17 +44,11 @@
 			<!-- Area per visualizzare lo stato attuale e cambiarlo (disponibile solo per il ruolo Operator) -->
 			<th:block sec:authorize="hasAuthority('OPERATOR')">
 				<div class="col-7 mt-3">
-					<th:block th:if="${user.status} == true">
-						<div class="text-bg-success rounded-3 text-center p-2" style="width: 15rem;">STATO: DISPONIBILE
-						</div>
-					</th:block>
-					<th:block th:if="${user.status} == false">
-						<div class="text-bg-danger rounded-3 text-center p-2" style="width: 15rem;">STATO: NON
-							DISPONIBILE
-						</div>
-					</th:block>
 					<form id="user-form" th:action="@{/users/edit}" method="POST">
-						<button type="submit" class="btn btn-primary my-2">Cambia stato</button>
+						<span class="fw-bold me-2">STATO: </span>
+						<button type="submit" class="btn my-2" title="Cambia Stato"
+							th:text="${user.status == true} ? 'DISPONIBILE' : 'NON DISPONIBILE'"
+							th:classappend="${user.status == true} ? 'btn-success' : 'btn-danger'"></button>
 					</form>
 				</div>
 			</th:block>
