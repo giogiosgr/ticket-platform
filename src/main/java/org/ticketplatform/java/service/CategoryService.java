@@ -63,7 +63,7 @@ public class CategoryService {
 	    String name = category.getName();
 		
 		if (repo.existsByName(name)) {
-			throw new Exception("La categoria '" + name + "' esiste già nel Database");
+			throw new Exception("la categoria '" + name + "' è già esistente");
 		}
 		
 		return repo.save(category);

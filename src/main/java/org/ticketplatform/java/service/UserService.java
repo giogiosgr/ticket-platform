@@ -49,7 +49,7 @@ public class UserService {
 		String userName = user.getUsername();
 		
 		if (repo.existsByUsername(userName)) {
-			throw new Exception("L'utente '" + userName + "' esiste già nel Database");
+			throw new Exception("l'operatore '" + userName + "' è già esistente");
 		}
 		
 		return repo.save(user);

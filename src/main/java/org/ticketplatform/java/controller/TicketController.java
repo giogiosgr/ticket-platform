@@ -3,6 +3,7 @@ package org.ticketplatform.java.controller;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,8 @@ public class TicketController {
 
 	// INDEX
 	@GetMapping()
-	public String index(@RequestParam(required = false) String sortField, @RequestParam(required = false) String sortDir, Authentication authentication, Model model) {
+	public String index(@RequestParam(required = false) String sortField,
+			@RequestParam(required = false) String sortDir, Authentication authentication, Model model) {
 
 		// Consegna della lista di tickets alla index
 		// Un admin vedrà tutti i ticket
@@ -55,25 +57,25 @@ public class TicketController {
 		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
 			isAdmin = true;
 		}
-		
+
 		// Parametri di sorting (campo e direzione ordinamento) e recupero tickets per sorting specifico
-		
+
 		if (sortField == null) {
-		    sortField = "id";
+			sortField = "id";
 		}
-		
-	    if (sortDir == null) {
-	        sortDir = "asc";
-	    }
-		
+
+		if (sortDir == null) {
+			sortDir = "asc";
+		}
+
 		Sort sort = sortDir.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
 
 		model.addAttribute("tickets", ticketService.getAll(sort));
 		model.addAttribute("loggedUser", userService.getByUsername(authentication.getName()));
 		model.addAttribute("isAdmin", isAdmin);
 		model.addAttribute("sortField", sortField);
-	    model.addAttribute("sortDir", sortDir);
-	    model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+		model.addAttribute("sortDir", sortDir);
+		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 
 		return "/tickets/index";
 	}
@@ -101,15 +103,17 @@ public class TicketController {
 	@GetMapping("/show/{id}")
 	public String show(@PathVariable int id, Authentication authentication, Model model) {
 
-		// all'operatore a cui non è assegnata la risorsa viene restituita una pagina di errore
-
-		Ticket ticketToShow = ticketService.getById(id);
-		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("OPERATOR"))
-				&& !userService.getByUsername(authentication.getName()).getTickets().contains(ticketToShow)) {
-			return "/pages/authError";
+		// controllo che operatore possa accedere alla risorsa, gestione eccezione per risorsa non esistente	
+		try {
+			Ticket ticketToShow = ticketService.getById(id);
+			if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("OPERATOR"))
+					&& !userService.getByUsername(authentication.getName()).getTickets().contains(ticketToShow)) {
+				return "/pages/authError";
+			}
+			model.addAttribute("ticket", ticketToShow);			
+		} catch (NoSuchElementException e) {
+			return "/pages/notFoundError";
 		}
-
-		model.addAttribute("ticket", ticketToShow);
 
 		return "/tickets/show";
 	}
@@ -119,7 +123,6 @@ public class TicketController {
 	public String create(Model model) {
 
 		// creazione nuovo ticket a cui viene settato lo status predefinito "da fare" prima della consegna al model
-		
 		Ticket newTicket = new Ticket();
 		newTicket.setStatus("da fare");
 
@@ -151,14 +154,14 @@ public class TicketController {
 	// EDIT
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable int id, Authentication authentication, Model model) {
-		
+
 		// all'operatore a cui non è assegnata la risorsa viene restituita una pagina di errore
 		Ticket ticketToEdit = ticketService.getById(id);
 		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("OPERATOR"))
 				&& !userService.getByUsername(authentication.getName()).getTickets().contains(ticketToEdit)) {
 			return "/pages/authError";
 		}
-		
+
 		// i campi disponibili nel form di edit varieranno a seconda del ruolo
 		boolean isAdmin = false;
 		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
@@ -201,5 +204,5 @@ public class TicketController {
 
 		return "redirect:/tickets";
 	}
-	
+
 }
