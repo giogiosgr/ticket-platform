@@ -43,11 +43,11 @@
 					<thead>
 						<tr>
 							<th class="fs-5"><a th:href="@{/tickets(sortField='id', sortDir=${reverseSortDir})}"
-									style="color: black; text-decoration: none;">ID<span th:if="${sortField == 'id'}"><i
+									style="color: black; text-decoration: none;">ID <span th:if="${sortField == 'id'}"><i
 											th:classappend="${sortDir == 'asc'} ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i></span></a>
 							</th>
 							<th class="fs-5"><a th:href="@{/tickets(sortField='title', sortDir=${reverseSortDir})}"
-									style="color: black; text-decoration: none;">Titolo<span
+									style="color: black; text-decoration: none;">Titolo <span
 										th:if="${sortField == 'title'}"><i
 											th:classappend="${sortDir == 'asc'} ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i></span></a>
 							</th>
