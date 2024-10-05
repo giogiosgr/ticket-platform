@@ -32,7 +32,7 @@ public class TicketRestController {
 	@Autowired
 	TicketService ticketService;
 
-	@GetMapping()
+	@GetMapping("/tickets")
 	public List<Ticket> index(@RequestParam(required = false) String title) {
 
 		List<Ticket> result;
@@ -44,6 +44,18 @@ public class TicketRestController {
 		}
 
 		return result;
+	}
+	
+	@GetMapping("/id/{id}")
+	public ResponseEntity<Ticket> show(@PathVariable int id) {
+		
+		Optional<Ticket> ticket = ticketService.getOptionalById(id);
+		
+		if (ticket.isPresent()) {
+			return new ResponseEntity<>(ticket.get(), HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	@GetMapping("/category/{category}")
