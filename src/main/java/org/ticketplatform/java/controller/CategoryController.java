@@ -55,7 +55,7 @@ public class CategoryController {
 
 		// gestione eccezione del caso di nome già appartenente ad una categoria
 		try {
-			categoryService.createUser(categoryForm);
+			categoryService.createOrUpdateUser(categoryForm);
 			attributes.addFlashAttribute("successMessage",
 					"categoria '" + categoryForm.getName() + "' creata con successo");
 			return "redirect:/categories";
@@ -84,22 +84,28 @@ public class CategoryController {
 			return "/categories/edit";
 		}
 
-        categoryService.save(categoryForm);
-        
-        attributes.addFlashAttribute("successMessage", "categoria '" + categoryForm.getName() + "' modificata con successo");
-        
-        return "redirect:/categories";
+		// gestione eccezione del caso di nome già appartenente ad una categoria
+		try {
+			categoryService.createOrUpdateUser(categoryForm);
+			attributes.addFlashAttribute("successMessage",
+					"categoria '" + categoryForm.getName() + "' modificata con successo");
+			return "redirect:/categories";
+		} catch (Exception e) {
+			attributes.addFlashAttribute("notSuccessMessage", e.getMessage());
+			return "redirect:/categories/edit/" + id;
+		}
 	}
 
 	// DELETE
 	@PostMapping("/delete/{id}")
 	public String delete(@PathVariable int id, Authentication authentication, RedirectAttributes attributes) {
-		
+
 		Category categoryToDelete = categoryService.getById(id);
-		
+
 		categoryService.delete(categoryToDelete);
-		
-		attributes.addFlashAttribute("successMessage", "categoria '" + categoryToDelete.getName() + "' eliminata con successo");
+
+		attributes.addFlashAttribute("successMessage",
+				"categoria '" + categoryToDelete.getName() + "' eliminata con successo");
 
 		return "redirect:/categories";
 	}

@@ -58,7 +58,7 @@ public class CategoryService {
 		
 	}
 
-	public Category createUser(Category category) throws Exception {
+	public Category createOrUpdateUser(Category category) throws Exception {
 		
 	    String name = category.getName();
 		
