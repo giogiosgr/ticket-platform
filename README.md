@@ -67,6 +67,16 @@
 ### Libreria UI
 #### Puoi utilizzare Bootstrap o altra libreria UI per realizzare l’interfaccia del back-office, come ad esempio Tailwind.
 
+## Bonus (opzionale)
+### Altre CRUD di entità
+#### L’utente admin può anche creare nuovi operatori e gestire le categorie dei ticket.
+#### Durante la creazione di un operatore, tra i campi è prevista la password per la login.
+### Eccezioni
+#### Gestire il comportamento della nostra applicazione gestendo anche le eccezioni lanciate!
+### Pagine di errore/not found
+#### Gestire il comportamento delle pagine di errore di base per gli errori emessi dalla nostra applicazione in pagina.
+### Testing
+#### Provare a sperimentare con classi di testing sulla nostra applicazione Spring MVC
 
 
 
