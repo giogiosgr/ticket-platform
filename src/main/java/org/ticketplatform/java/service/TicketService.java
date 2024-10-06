@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.ticketplatform.java.model.Ticket;
+import org.ticketplatform.java.model.TicketStatus;
 import org.ticketplatform.java.repo.TicketRepository;
 
 import jakarta.validation.Valid;
@@ -80,9 +81,9 @@ public class TicketService {
 		
 	}
 	
-	public List<Ticket> getByStatus(String category) {
+	public List<Ticket> getByStatus(TicketStatus status) {
 		
-		return repo.findByStatus(category);
+		return repo.findByStatus(status);
 		
 	}
 

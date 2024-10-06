@@ -16,6 +16,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -48,9 +50,8 @@ public class Ticket {
 	@Column(name = "description", columnDefinition = "text")
 	private String description;
 
-	@Size(min = 2, max = 50)
-	@Column(name = "status", length = 50, nullable = false)
-	private String status;
+	@Enumerated(EnumType.STRING)
+	private TicketStatus status;
 
 	@CreationTimestamp
 	private LocalDateTime createdAt;
@@ -106,11 +107,11 @@ public class Ticket {
 		this.category = category;
 	}
 
-	public String getStatus() {
+	public TicketStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(TicketStatus status) {
 		this.status = status;
 	}
 

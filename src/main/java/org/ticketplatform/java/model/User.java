@@ -65,7 +65,7 @@ public class User {
 	private LocalDateTime updatedAt;
 	
 	@Formula("(SELECT count(user.id) FROM user " 
-			+ "LEFT JOIN tickets ON user.id = tickets.user_id AND tickets.status != \"completato\" "
+			+ "LEFT JOIN tickets ON user.id = tickets.user_id AND tickets.status != \"COMPLETATO\" "
 			+ "WHERE tickets.user_id = id)")
 	private Integer ongoingTickets;
 	

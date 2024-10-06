@@ -87,9 +87,9 @@
 										style="text-decoration: none;"></a></td>
 								<td th:text="${ticket.category.name}"></td>
 								<td th:text="${ticket.user.username}"></td>
-								<td th:text="${ticket.status}"></td>
-								<td th:text="${ticket.getFormattedCreatedAt()}"></td>
-								<td th:text="${ticket.getFormattedUpdatedAt()}"></td>
+								<td th:text="${ticket.status.getDisplayValue}"></td>
+								<td th:text="${ticket.FormattedCreatedAt}"></td>
+								<td th:text="${ticket.FormattedUpdatedAt}"></td>
 							</th:block>
 						</tr>
 					</tbody>

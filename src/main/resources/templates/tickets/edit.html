@@ -46,9 +46,9 @@
 					<div class="mb-3">
 						<label for="status" class="form-label">Stato</label>
 						<select class="form-select" id="status" th:field="*{status}">
-							<option value="da fare" selected>da fare</option>
-							<option value="in corso">in corso</option>
-							<option value="completato">completato</option>
+							<th:block th:each="ticketStatus : ${ticketStatuses}">
+								<option th:value="${ticketStatus}" th:text="${ticketStatus.DisplayValue}"></option>
+							</th:block>
 						</select>
 					</div>
 					<div class="mb-3" th:classappend="${isAdmin == true} ? '' : 'd-none'">

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.ticketplatform.java.model.Ticket;
+import org.ticketplatform.java.model.TicketStatus;
 import org.ticketplatform.java.service.TicketService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +33,7 @@ public class TicketRestController {
 	@Autowired
 	TicketService ticketService;
 
-	@GetMapping("/tickets")
+	@GetMapping()
 	public List<Ticket> index(@RequestParam(required = false) String title) {
 
 		List<Ticket> result;
@@ -72,7 +73,7 @@ public class TicketRestController {
 	}
 
 	@GetMapping("/status/{status}")
-	public List<Ticket> filterByStatus(@PathVariable String status) {
+	public List<Ticket> filterByStatus(@PathVariable TicketStatus status) {
 
 		return ticketService.getByStatus(status);
 	}

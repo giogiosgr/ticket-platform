@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.ticketplatform.java.model.Ticket;
+import org.ticketplatform.java.model.TicketStatus;
 import org.ticketplatform.java.model.User;
 import org.ticketplatform.java.repo.UserRepository;
 import org.ticketplatform.java.service.CategoryService;
@@ -124,7 +125,7 @@ public class TicketController {
 
 		// creazione nuovo ticket a cui viene settato lo status predefinito "da fare" prima della consegna al model
 		Ticket newTicket = new Ticket();
-		newTicket.setStatus("da fare");
+	    newTicket.setStatus(TicketStatus.DA_FARE);
 
 		model.addAttribute("ticket", newTicket);
 		model.addAttribute("operators", userService.getAll());
@@ -172,6 +173,7 @@ public class TicketController {
 		model.addAttribute("operators", userService.getAll());
 		model.addAttribute("categories", categoryService.getAll());
 		model.addAttribute("isAdmin", isAdmin);
+		model.addAttribute("ticketStatuses", TicketStatus.values());
 
 		return "/tickets/edit";
 	}

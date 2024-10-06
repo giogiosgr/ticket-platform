@@ -32,7 +32,7 @@
 				</div>
 				<div class="mb-3">
 					<span class="fw-bold me-2">Data di registrazione: </span>
-					<span th:text="${user.getFormattedCreatedAt()}"></span>
+					<span th:text="${user.FormattedCreatedAt}"></span>
 				</div>
 				<th:block sec:authorize="hasAuthority('OPERATOR')">
 					<div class="mb-3">

@@ -36,7 +36,7 @@ public class TicketRestControllerTest {
 	@Test
 	void shouldReturnOkForTicketStatus() throws Exception {
 		
-		mockMvc.perform(get("/api/tickets/status/da fare")).andExpect(status().isOk());
+		mockMvc.perform(get("/api/tickets/status/DA_FARE")).andExpect(status().isOk());
 		
 	}
 	
