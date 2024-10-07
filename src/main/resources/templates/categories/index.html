@@ -40,14 +40,18 @@
 								<td>
 									<p class="text-center fw-bold pt-1" th:text="${category.name}"></p>
 								</td>
-								<td class="text-center">
-									<a class="btn btn-sm btn-warning m-1" th:href="@{'/categories/edit/{id}'(id=${category.id})}"
-										role="button">Modifica</a>
-									<!-- Button trigger modal -->
-									<button type="button" class="btn btn-sm btn-danger m-1" data-bs-toggle="modal"
-										th:data-bs-target="'#delete-' + ${category.id}">
-										Cancella
-									</button>
+								<td>
+									<div class="d-flex justify-content-center">
+										<form th:action="@{'/categories/edit/{id}'(id=${category.id})}" method="get">
+											<button type="submit" class="btn btn-sm btn-warning m-1" title="Rinomina"><i
+													class="fas fa-edit"></i></button>
+										</form>
+										<!-- Button trigger modal -->
+										<button type="button" class="btn btn-sm btn-danger m-1" title="Elimina"
+											data-bs-toggle="modal" th:data-bs-target="'#delete-' + ${category.id}">
+											<i class="fa-solid fa-trash"></i>
+										</button>
+									</div>
 									<!-- Modal -->
 									<div class="modal fade" th:id="'delete-' + ${category.id}" tabindex="-1"
 										aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -60,13 +64,15 @@
 														aria-label="Close"></button>
 												</div>
 												<div class="modal-body text-center">
-													ATTENZIONE! L'eliminazione comporta la cancellazione di tutti i ticket appartenenti a questa categoria ([[ ${category.name} ]])
+													ATTENZIONE! L'eliminazione comporta la cancellazione di tutti i
+													ticket appartenenti a questa categoria ([[ ${category.name} ]])
 												</div>
 												<div class="modal-footer">
 													<button type="button" class="btn btn-secondary"
 														data-bs-dismiss="modal">Annulla</button>
 													<form class="d-inline-block"
-														th:action="@{/categories/delete/{id}(id=${category.id})}" method="post">
+														th:action="@{/categories/delete/{id}(id=${category.id})}"
+														method="post">
 														<button class="btn btn-danger m-1" type="submit"
 															id="submitButton">Conferma</button>
 													</form>
