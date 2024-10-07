@@ -52,7 +52,8 @@
 										th:if="${sortField == 'title'}"><i
 											th:classappend="${sortDir == 'asc'} ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i></span></a>
 							</th>
-							<th class="fs-5"><a th:href="@{/tickets(sortField='status', sortDir=${reverseSortDir})}"
+							<th class="fs-5">
+								<a th:href="@{/tickets(sortField='status', sortDir=${reverseSortDir})}"
 									style="color: black; text-decoration: none;">Stato <span
 										th:if="${sortField == 'status'}"><i
 											th:classappend="${sortDir == 'asc'} ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i></span></a>
@@ -86,7 +87,12 @@
 								</td>
 								<td><a th:href="@{'/tickets/show/{id}'(id=${ticket.id})}" th:text="${ticket.title}"
 										style="text-decoration: none;"></a></td>
-								<td th:text="${ticket.status.DisplayValue}"></td>
+								<td th:switch="${ticket.status.displayValue}">
+									<span th:case="'Da fare'" class="circle green-circle"></span>
+									<span th:case="'In corso'" class="circle orange-circle"></span>
+									<span th:case="'Completato'" class="circle dark-circle"></span>
+									<span th:text="${ticket.status.DisplayValue}"></span>
+								</td>
 								<td th:text="${ticket.user.username}"></td>
 								<td th:text="${ticket.category.name}"></td>
 								<td th:text="${ticket.FormattedCreatedAt}"></td>

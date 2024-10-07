@@ -1,12 +1,33 @@
 /* RESET */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 /* SELEZIONE FONT E BACKGROUND COLOR DEL BODY */
 body {
-    font-family: Roboto, Arial;
+	font-family: Roboto, Arial;
 	background-color: azure;
+}
+
+/* CLASSI PER FORMARE UN CIRCOLO CON DIVERSI COLORI PER I VARI STATUS DEL TICKET */
+
+.circle {
+	height: 10px;
+	width: 10px;
+	border-radius: 50%;
+	display: inline-block;
+}
+
+.green-circle {
+	background-color: lawngreen;
+}
+
+.orange-circle {
+	background-color: orange;
+}
+
+.dark-circle {
+	background-color: darkslategrey;
 }
