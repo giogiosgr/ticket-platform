@@ -43,7 +43,8 @@
 					<thead>
 						<tr>
 							<th class="fs-5"><a th:href="@{/tickets(sortField='id', sortDir=${reverseSortDir})}"
-									style="color: black; text-decoration: none;">ID <span th:if="${sortField == 'id'}"><i
+									style="color: black; text-decoration: none;">ID <span
+										th:if="${sortField == 'id'}"><i
 											th:classappend="${sortDir == 'asc'} ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i></span></a>
 							</th>
 							<th class="fs-5"><a th:href="@{/tickets(sortField='title', sortDir=${reverseSortDir})}"
@@ -51,9 +52,9 @@
 										th:if="${sortField == 'title'}"><i
 											th:classappend="${sortDir == 'asc'} ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i></span></a>
 							</th>
-							<th class="fs-5"><a th:href="@{/tickets(sortField='category', sortDir=${reverseSortDir})}"
-									style="color: black; text-decoration: none;">Categoria <span
-										th:if="${sortField == 'category'}"><i
+							<th class="fs-5"><a th:href="@{/tickets(sortField='status', sortDir=${reverseSortDir})}"
+									style="color: black; text-decoration: none;">Stato <span
+										th:if="${sortField == 'status'}"><i
 											th:classappend="${sortDir == 'asc'} ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i></span></a>
 							</th>
 							<th class="fs-5"><a th:href="@{/tickets(sortField='user', sortDir=${reverseSortDir})}"
@@ -61,9 +62,9 @@
 										th:if="${sortField == 'user'}"><i
 											th:classappend="${sortDir == 'asc'} ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i></span></a>
 							</th>
-							<th class="fs-5"><a th:href="@{/tickets(sortField='status', sortDir=${reverseSortDir})}"
-									style="color: black; text-decoration: none;">Stato <span
-										th:if="${sortField == 'status'}"><i
+							<th class="fs-5"><a th:href="@{/tickets(sortField='category', sortDir=${reverseSortDir})}"
+									style="color: black; text-decoration: none;">Categoria <span
+										th:if="${sortField == 'category'}"><i
 											th:classappend="${sortDir == 'asc'} ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i></span></a>
 							</th>
 							<th class="fs-5"><a th:href="@{/tickets(sortField='createdAt', sortDir=${reverseSortDir})}"
@@ -85,9 +86,9 @@
 								</td>
 								<td><a th:href="@{'/tickets/show/{id}'(id=${ticket.id})}" th:text="${ticket.title}"
 										style="text-decoration: none;"></a></td>
-								<td th:text="${ticket.category.name}"></td>
+								<td th:text="${ticket.status.DisplayValue}"></td>
 								<td th:text="${ticket.user.username}"></td>
-								<td th:text="${ticket.status.getDisplayValue}"></td>
+								<td th:text="${ticket.category.name}"></td>
 								<td th:text="${ticket.FormattedCreatedAt}"></td>
 								<td th:text="${ticket.FormattedUpdatedAt}"></td>
 							</th:block>

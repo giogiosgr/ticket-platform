@@ -2,9 +2,9 @@ package org.ticketplatform.java.model;
 
 public enum TicketStatus {
 	
-    DA_FARE("da fare"),
-    IN_CORSO("in corso"),
-    COMPLETATO("completato");
+    DA_FARE("Da fare"),
+    IN_CORSO("In corso"),
+    COMPLETATO("Completato");
 
     private String displayValue;
 

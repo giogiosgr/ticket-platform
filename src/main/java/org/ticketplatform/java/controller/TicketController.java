@@ -172,20 +172,27 @@ public class TicketController {
 		model.addAttribute("ticket", ticketToEdit);
 		model.addAttribute("operators", userService.getAll());
 		model.addAttribute("categories", categoryService.getAll());
-		model.addAttribute("isAdmin", isAdmin);
 		model.addAttribute("ticketStatuses", TicketStatus.values());
-
+		model.addAttribute("isAdmin", isAdmin);
+		
 		return "/tickets/edit";
 	}
 
 	// UPDATE
 	@PostMapping("/edit/{id}")
-	public String update(@Valid @ModelAttribute("ticket") Ticket ticketForm, BindingResult bindingResult, Model model,
+	public String update(@Valid @ModelAttribute("ticket") Ticket ticketForm, BindingResult bindingResult, Authentication authentication, Model model,
 			RedirectAttributes attributes) {
+		
+		boolean isAdmin = false;
+		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
+			isAdmin = true;
+		}
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("operators", userService.getAll());
 			model.addAttribute("categories", categoryService.getAll());
+			model.addAttribute("ticketStatuses", TicketStatus.values());
+			model.addAttribute("isAdmin", isAdmin);		
 			return "/tickets/edit";
 		}
 
