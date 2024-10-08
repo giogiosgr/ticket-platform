@@ -44,11 +44,11 @@
 									role="button">Modifica</a>
 								<!-- Button trigger modal -->
 								<button type="button" class="btn btn-sm btn-danger m-1" data-bs-toggle="modal"
-									th:data-bs-target="'#delete-' + ${note.id}">
+									th:data-bs-target="'#delete-note-' + ${note.id}">
 									Cancella
 								</button>
 								<!-- Modal -->
-								<div class="modal fade" th:id="'delete-' + ${note.id}" tabindex="-1"
+								<div class="modal fade" th:id="'delete-note-' + ${note.id}" tabindex="-1"
 									aria-labelledby="exampleModalLabel" aria-hidden="true">
 									<div class="modal-dialog">
 										<div class="modal-content text-dark">
@@ -98,14 +98,14 @@
 						<th:block sec:authorize="hasAuthority('ADMIN')">
 							<!-- Button trigger modal -->
 							<button type="button" class="btn btn-danger m-1" data-bs-toggle="modal"
-								th:data-bs-target="'#delete-' + ${ticket.id}">
+								th:data-bs-target="'#delete-ticket-' + ${ticket.id}">
 								Elimina Ticket
 							</button>
 							<!-- Modal -->
-							<div class="modal fade" th:id="'delete-' + ${ticket.id}" tabindex="-1"
+							<div class="modal fade" th:id="'delete-ticket-' + ${ticket.id}" tabindex="-1"
 								aria-labelledby="exampleModalLabel" aria-hidden="true">
 								<div class="modal-dialog">
-									<div class="modal-content">
+									<div class="modal-content text-dark">
 										<div class="modal-header">
 											<h1 class="modal-title fs-5" id="exampleModalLabel">Conferma
 												cancellazione</h1>
