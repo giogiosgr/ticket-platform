@@ -111,13 +111,16 @@ public class UserController {
 	        return "/users/create";
 	 	}
 	    
+	    String newUsername = userForm.getUsername().toLowerCase();
+	    
 	    userForm.setPassword("{noop}" + userForm.getPassword());
-	    userForm.setEmail(userForm.getUsername() + "@ticketplatform.com");
+	    userForm.setUsername(newUsername);
+	    userForm.setEmail(newUsername + "@ticketplatform.com");    
 
 	    // gestione eccezione del caso di username già appartenente ad uno user
 	    try {
 	        userService.createUser(userForm);
-	        attributes.addFlashAttribute("successMessage", "operatore '" + userForm.getUsername() + "' creato con successo");
+	        attributes.addFlashAttribute("successMessage", "operatore '" + newUsername + "' creato con successo");
 	        return "redirect:/users/show";
 	    } catch (Exception e) {
 	    	attributes.addFlashAttribute("notSuccessMessage", e.getMessage());
