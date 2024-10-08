@@ -93,7 +93,7 @@
 									<span th:case="'Da fare'" class="circle green-circle"></span>
 									<span th:case="'In corso'" class="circle orange-circle"></span>
 									<span th:case="'Completato'" class="circle dark-circle"></span>
-									<span th:text="${ticket.status.DisplayValue}"></span>
+									<span class="ms-1" th:text="${ticket.status.DisplayValue}"></span>
 								</td>
 								<td th:text="${ticket.user.username}"></td>
 								<td th:text="${ticket.category.name}"></td>

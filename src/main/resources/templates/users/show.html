@@ -19,25 +19,29 @@
 			</th:block>
 
 			<!-- Info utente -->
-			<div class="col-5">
+			<div class="col-4">
 				<div class="text-bg-secondary p-2 mt-3 rounded">
-					<h4 class="fw-bold mb-3" th:text="'RIEPILOGO - ' + ${user.username}"></h4>
-					<div class="mb-3">
+					<h4 class="ms-3 mb-3 mt-2 fw-bold text-break" th:text="'RIEPILOGO - ' + ${user.username}"></h4>
+					<div class="ms-3 mb-3">
 						<th:block th:each="role : ${user.roles}">
 							<span class="fw-bold me-2">Ruoli: </span>
 							<span class="me-2" th:text="${role.name}"></span>
 						</th:block>
 					</div>
-					<div class="mb-3">
+					<div class="ms-3 mb-3">
 						<span class="fw-bold me-2">Email: </span>
-						<span th:text="${user.email}"></span>
+						<span class="text-break" th:text="${user.email}"></span>
 					</div>
-					<div class="mb-3">
+					<div class="ms-3 mb-3">
 						<span class="fw-bold me-2">Data di registrazione: </span>
 						<span th:text="${user.FormattedCreatedAt}"></span>
 					</div>
 					<th:block sec:authorize="hasAuthority('OPERATOR')">
-						<div class="mb-3">
+						<div class="ms-3 mb-3">
+							<span class="fw-bold me-2">Ticket totali: </span>
+							<span th:text="${user.tickets.size}"></span>
+						</div>
+						<div class="ms-3 mb-3">
 							<span class="fw-bold me-2">Ticket non completati: </span>
 							<span th:text="${user.ongoingTickets}"></span>
 						</div>
@@ -46,7 +50,7 @@
 			</div>
 			<!-- Area per visualizzare lo stato attuale e cambiarlo (disponibile solo per il ruolo Operator) -->
 			<th:block sec:authorize="hasAuthority('OPERATOR')">
-				<div class="col-7 mt-3">
+				<div class="col-8 mt-3">
 					<form id="user-form" th:action="@{/users/edit}" method="POST">
 						<span class="fw-bold me-2">STATO: </span>
 						<button type="submit" class="btn my-2" title="Cambia Stato"

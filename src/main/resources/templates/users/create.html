@@ -23,7 +23,7 @@
 					<div class="mb-3">
 						<label for="username" class="form-label">Username</label>
 						<input name="username" type="text" class="form-control" id="username" required minlength="2"
-							maxlength="10" th:field="*{username}" th:errorClass="is-invalid">
+							maxlength="50" th:field="*{username}" th:errorClass="is-invalid">
 						<div th:if="${#fields.hasErrors('username')}" class="invalid-feedback">
 							<ul>
 								<li th:each="err : ${#fields.errors('username')}" th:text="${err}"></li>
