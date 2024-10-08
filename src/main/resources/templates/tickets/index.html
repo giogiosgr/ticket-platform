@@ -38,7 +38,7 @@
 			</th:block>
 
 			<!-- Tickets Table -->
-			<th:block th:if="${tickets.size() > 0}">
+			<th:block th:if="${tickets.size > 0} and (${loggedUser.tickets.size > 0} or ${isAdmin == true})">
 				<table class="table table-striped table-hover mt-2">
 					<thead>
 						<tr>
@@ -103,10 +103,11 @@
 				</table>
 			</th:block>
 
-			<th:block th:unless="${tickets.size() > 0}">
+			<th:block th:unless="${tickets.size > 0} and (${loggedUser.tickets.size > 0} or ${isAdmin == true})">
 				<h3>Nessun ticket trovato</h3>
 			</th:block>
 
+			
 		</div>
 	</main>
 

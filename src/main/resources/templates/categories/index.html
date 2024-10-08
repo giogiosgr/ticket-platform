@@ -26,7 +26,7 @@
 			</th:block>
 
 			<!-- Categories Table -->
-			<th:block th:if="${categories.size() > 0}">
+			<th:block th:if="${categories.size > 0}">
 				<div class="col-6">
 					<table class="table table-striped table-hover mt-2">
 						<thead>
@@ -87,7 +87,7 @@
 				</div>
 			</th:block>
 
-			<th:block th:unless="${categories.size() > 0}">
+			<th:block th:unless="${categories.size > 0}">
 				<h3>Nessuna categoria trovata</h3>
 			</th:block>
 

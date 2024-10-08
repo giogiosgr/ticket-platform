@@ -104,7 +104,7 @@ public class TicketController {
 	@GetMapping("/show/{id}")
 	public String show(@PathVariable int id, Authentication authentication, Model model) {
 
-		// controllo che operatore possa accedere alla risorsa, gestione eccezione per risorsa non esistente	
+		// controllo che l'operatore loggato possa accedere alla risorsa, e gestione eccezione per risorsa non esistente	
 		try {
 			Ticket ticketToShow = ticketService.getById(id);
 			if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("OPERATOR"))
