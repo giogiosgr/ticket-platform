@@ -9,14 +9,18 @@
 
 	<main class="container">
 
+		<div class="col-4 text-center text-bg-primary my-3 rounded">
+			<h2 class="my-1">MODIFICA CATEGORIA</h2>
+		</div>
+
 		<th:block th:if="${notSuccessMessage != null}">
 			<div th:replace="~{fragments/fragments :: notSuccessAlert(${notSuccessMessage})}"></div>
 		</th:block>
 
-		<h2 class="my-4">MODIFICA CATEGORIA</h2>
 		<div class="row">
 			<div class="col-6">
-				<form id="category-form" th:object="${category}" th:action="@{'/categories/edit/{id}'(id=*{id})}" method="POST">
+				<form id="category-form" th:object="${category}" th:action="@{'/categories/edit/{id}'(id=*{id})}"
+					method="POST">
 					<div class="mb-3">
 						<label for="name" class="form-label">Nome categoria</label>
 						<input name="name" type="text" class="form-control" id="name" required minlength="2"

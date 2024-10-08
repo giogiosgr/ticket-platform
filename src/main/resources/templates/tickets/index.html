@@ -10,7 +10,9 @@
 	<main class="container">
 		<div class="row">
 
-			<h2 class="my-3">GESTIONE TICKETS:</h2>
+			<div class="col-4 text-center text-bg-primary my-3 rounded">
+				<h2 class="my-1">GESTIONE TICKETS:</h2>
+			</div>
 
 			<div class="row my-2">
 				<form th:action="@{/tickets/search}" method="GET" class="col-8">
@@ -85,7 +87,7 @@
 							<th:block th:if="${isAdmin == true} or ${ticket.user.id} == ${loggedUser.id}">
 								<td th:text=" ${ticket.id}" class="fw-bold">
 								</td>
-								<td><a th:href="@{'/tickets/show/{id}'(id=${ticket.id})}" th:text="${ticket.title}"
+								<td><a class="text-break" th:href="@{'/tickets/show/{id}'(id=${ticket.id})}" th:text="${ticket.title}"
 										style="text-decoration: none;"></a></td>
 								<td th:switch="${ticket.status.displayValue}">
 									<span th:case="'Da fare'" class="circle green-circle"></span>
@@ -107,7 +109,7 @@
 				<h3>Nessun ticket trovato</h3>
 			</th:block>
 
-			
+
 		</div>
 	</main>
 

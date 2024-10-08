@@ -8,9 +8,13 @@
 	<header th:insert="~{fragments/fragments :: navbar('create')}"></header>
 
 	<main class="container">
-		<h2 class="my-4">CREAZIONE TICKET</h2>
+
+		<div class="col-4 text-center text-bg-primary my-3 rounded">
+			<h2 class="my-1">CREAZIONE TICKET</h2>
+		</div>
+
 		<div class="row">
-			<div class="col-6">
+			<div class="col-4">
 				<form id="ticket-form" th:object="${ticket}" th:action="@{/tickets/create}" method="POST">
 					<div class="mb-3">
 						<label for="title" class="form-label">Titolo ticket</label>

@@ -82,51 +82,53 @@
 			</div>
 			<!-- Info Ticket -->
 			<div class="col-6">
-				<h4 class="fw-bold ms-4 my-2"
-					th:text="'Ticket #' + ${ticket.id} + ' - ' + ${ticket.title} + ' - operatore: ' + ${ticket.user.username}">
-				</h4>
-				<p class="ms-4 my-2"><span class="fw-bold">Categoria: </span>[[${ticket.category.name}]]</p>
-				<p class="ms-4 my-2"><span class="fw-bold">Stato: </span>[[${ticket.status.displayValue}]]</p>
-				<p class="ms-4 my-2"><span class="fw-bold">Creato il: </span>[[${ticket.FormattedCreatedAt}]]</p>
-				<p class="ms-4 my-2"><span class="fw-bold">Ultimo aggiornamento:
-					</span>[[${ticket.FormattedUpdatedAt}]]
-				</p>
-				<div class="m-4">
-					<a class="btn btn-warning m-1" th:href="@{'/tickets/edit/{id}'(id=${ticket.id})}"
-						role="button">Modifica</a>
-					<th:block sec:authorize="hasAuthority('ADMIN')">
-						<!-- Button trigger modal -->
-						<button type="button" class="btn btn-danger m-1" data-bs-toggle="modal"
-							th:data-bs-target="'#delete-' + ${ticket.id}">
-							Elimina Ticket
-						</button>
-						<!-- Modal -->
-						<div class="modal fade" th:id="'delete-' + ${ticket.id}" tabindex="-1"
-							aria-labelledby="exampleModalLabel" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h1 class="modal-title fs-5" id="exampleModalLabel">Conferma
-											cancellazione</h1>
-										<button type="button" class="btn-close" data-bs-dismiss="modal"
-											aria-label="Close"></button>
-									</div>
-									<div class="modal-body text-center">
-										Sei sicuro di voler eliminare il ticket?
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary"
-											data-bs-dismiss="modal">Annulla</button>
-										<form class="d-inline-block"
-											th:action="@{/tickets/delete/{id}(id=${ticket.id})}" method="POST">
-											<button class="btn btn-danger m-1" type="submit"
-												id="submitButton">Conferma</button>
-										</form>
+				<div class="text-bg-secondary p-2 mt-3 rounded">
+					<h4 class="fw-bold ms-4 my-2 text-break"
+						th:text="'Ticket #' + ${ticket.id} + ' - ' + ${ticket.title} + ' - operatore: ' + ${ticket.user.username}">
+					</h4>
+					<p class="ms-4 my-2"><span class="fw-bold">Categoria: </span>[[${ticket.category.name}]]</p>
+					<p class="ms-4 my-2"><span class="fw-bold">Stato: </span>[[${ticket.status.displayValue}]]</p>
+					<p class="ms-4 my-2"><span class="fw-bold">Creato il: </span>[[${ticket.FormattedCreatedAt}]]</p>
+					<p class="ms-4 my-2"><span class="fw-bold">Ultimo aggiornamento:
+						</span>[[${ticket.FormattedUpdatedAt}]]
+					</p>
+					<div class="m-4">
+						<a class="btn btn-warning m-1" th:href="@{'/tickets/edit/{id}'(id=${ticket.id})}"
+							role="button">Modifica</a>
+						<th:block sec:authorize="hasAuthority('ADMIN')">
+							<!-- Button trigger modal -->
+							<button type="button" class="btn btn-danger m-1" data-bs-toggle="modal"
+								th:data-bs-target="'#delete-' + ${ticket.id}">
+								Elimina Ticket
+							</button>
+							<!-- Modal -->
+							<div class="modal fade" th:id="'delete-' + ${ticket.id}" tabindex="-1"
+								aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h1 class="modal-title fs-5" id="exampleModalLabel">Conferma
+												cancellazione</h1>
+											<button type="button" class="btn-close" data-bs-dismiss="modal"
+												aria-label="Close"></button>
+										</div>
+										<div class="modal-body text-center">
+											Sei sicuro di voler eliminare il ticket?
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-bs-dismiss="modal">Annulla</button>
+											<form class="d-inline-block"
+												th:action="@{/tickets/delete/{id}(id=${ticket.id})}" method="POST">
+												<button class="btn btn-danger m-1" type="submit"
+													id="submitButton">Conferma</button>
+											</form>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					</th:block>
+						</th:block>
+					</div>
 				</div>
 			</div>
 

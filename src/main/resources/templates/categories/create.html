@@ -9,11 +9,15 @@
 
 	<main class="container">
 
+		<div class="col-4 text-center text-bg-primary my-3 rounded">
+			<h2 class="my-1">CREAZIONE CATEGORIA</h2>
+		</div>
+
 		<th:block th:if="${notSuccessMessage != null}">
 			<div th:replace="~{fragments/fragments :: notSuccessAlert(${notSuccessMessage})}"></div>
 		</th:block>
 
-		<h2 class="my-4">CREAZIONE CATEGORIA</h2>
+
 		<div class="row">
 			<div class="col-6">
 				<form id="category-form" th:object="${category}" th:action="@{/categories/create}" method="POST">

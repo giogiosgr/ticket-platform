@@ -8,7 +8,11 @@
 	<header th:insert="~{fragments/fragments :: navbar('edit')}"></header>
 
 	<main class="container">
-		<h2 class="my-4">MODIFICA NOTA</h2>
+
+		<div class="col-4 text-center text-bg-primary my-3 rounded">
+			<h2 class="my-1">MODIFICA NOTA</h2>
+		</div>
+
 		<div class="row">
 			<div class="col-6">
 				<form id="note-form" th:object="${note}" th:action="@{'/notes/edit/{id}'(id=*{id})}" method="POST">

@@ -18,28 +18,31 @@
 				<div th:replace="~{fragments/fragments :: successAlert(${successMessage})}"></div>
 			</th:block>
 
-			<div class="col-5 mt-3">
-				<h4 class="fw-bold mb-3" th:text="'AREA PERSONALE - ' + ${user.username}"></h4>
-				<div class="mb-3">
-					<th:block th:each="role : ${user.roles}">
-						<span class="fw-bold me-2">Ruoli: </span>
-						<span class="me-2" th:text="${role.name}"></span>
+			<!-- Info utente -->
+			<div class="col-5">
+				<div class="text-bg-secondary p-2 mt-3 rounded">
+					<h4 class="fw-bold mb-3" th:text="'RIEPILOGO - ' + ${user.username}"></h4>
+					<div class="mb-3">
+						<th:block th:each="role : ${user.roles}">
+							<span class="fw-bold me-2">Ruoli: </span>
+							<span class="me-2" th:text="${role.name}"></span>
+						</th:block>
+					</div>
+					<div class="mb-3">
+						<span class="fw-bold me-2">Email: </span>
+						<span th:text="${user.email}"></span>
+					</div>
+					<div class="mb-3">
+						<span class="fw-bold me-2">Data di registrazione: </span>
+						<span th:text="${user.FormattedCreatedAt}"></span>
+					</div>
+					<th:block sec:authorize="hasAuthority('OPERATOR')">
+						<div class="mb-3">
+							<span class="fw-bold me-2">Ticket non completati: </span>
+							<span th:text="${user.ongoingTickets}"></span>
+						</div>
 					</th:block>
 				</div>
-				<div class="mb-3">
-					<span class="fw-bold me-2">Email: </span>
-					<span th:text="${user.email}"></span>
-				</div>
-				<div class="mb-3">
-					<span class="fw-bold me-2">Data di registrazione: </span>
-					<span th:text="${user.FormattedCreatedAt}"></span>
-				</div>
-				<th:block sec:authorize="hasAuthority('OPERATOR')">
-					<div class="mb-3">
-						<span class="fw-bold me-2">Ticket non completati: </span>
-						<span th:text="${user.ongoingTickets}"></span>
-					</div>
-				</th:block>
 			</div>
 			<!-- Area per visualizzare lo stato attuale e cambiarlo (disponibile solo per il ruolo Operator) -->
 			<th:block sec:authorize="hasAuthority('OPERATOR')">
