@@ -17,9 +17,8 @@
 			<div th:replace="~{fragments/fragments :: notSuccessAlert(${notSuccessMessage})}"></div>
 		</th:block>
 
-
 		<div class="row">
-			<div class="col-6">
+			<div class="col-4">
 				<form id="category-form" th:object="${category}" th:action="@{/categories/create}" method="POST">
 					<div class="mb-3">
 						<label for="name" class="form-label">Nome categoria</label>

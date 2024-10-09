@@ -14,7 +14,7 @@
 		</div>
 
 		<div class="row">
-			<div class="col-6">
+			<div class="col-4">
 				<form id="ticket-form" th:object="${ticket}" th:action="@{'/tickets/edit/{id}'(id=*{id})}"
 					method="POST">
 					<div class="mb-3" th:classappend="${isAdmin == true} ? '' : 'd-none'">
