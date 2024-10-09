@@ -52,10 +52,9 @@ public class UserController {
 
 		// Si recupera l'operatore loggato per switchare lo status, con i seguenti vincoli:
 		// 1 - non può attivare lo stato "non attivo" se ha ticket aperti assegnati
-		// 2 - non può attivare lo stato "non attivo" se è l'unico operatore ancora  attivo
+		// 2 - non può attivare lo stato "non attivo" se è l'unico operatore ancora attivo
 
 		User userToUpdate = userService.getByUsername(authentication.getName());
-		boolean userStatus = userToUpdate.isStatus();
 
 		if (userToUpdate.getOngoingTickets() > 0) {
 			attributes.addFlashAttribute("notSuccessMessage",
@@ -63,6 +62,7 @@ public class UserController {
 			return "redirect:/users/show";
 		}
 
+		boolean userStatus = userToUpdate.isStatus();
 		int availableUsersCount = 0;
 		if (userStatus) {
 			for (User user : userService.getAll()) {
