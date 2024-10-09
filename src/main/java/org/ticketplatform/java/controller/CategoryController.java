@@ -55,7 +55,7 @@ public class CategoryController {
 
 		// gestione eccezione del caso di nome già appartenente ad una categoria
 		try {
-			categoryService.createOrUpdateUser(categoryForm);
+			categoryService.createOrUpdateCategory(categoryForm);
 			attributes.addFlashAttribute("successMessage",
 					"categoria '" + categoryForm.getName() + "' creata con successo");
 			return "redirect:/categories";
@@ -86,7 +86,7 @@ public class CategoryController {
 
 		// gestione eccezione del caso di nome già appartenente ad una categoria
 		try {
-			categoryService.createOrUpdateUser(categoryForm);
+			categoryService.createOrUpdateCategory(categoryForm);
 			attributes.addFlashAttribute("successMessage",
 					"categoria '" + categoryForm.getName() + "' modificata con successo");
 			return "redirect:/categories";
