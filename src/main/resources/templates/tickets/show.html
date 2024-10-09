@@ -97,9 +97,13 @@
 						</span>[[${ticket.FormattedUpdatedAt}]]
 					</p>
 					<div class="m-4">
-						<a class="btn btn-warning m-1" th:href="@{'/tickets/edit/{id}'(id=${ticket.id})}"
-							role="button">Aggiorna Ticket</a>
-						<th:block sec:authorize="hasAuthority('ADMIN')">
+						<!-- Pulsante di modifica non disponibile se lo user è operatore e non disponibile -->
+						<tb:lock th:if="${user.isStatus} or ${isAdmin}">
+							<a class="btn btn-warning m-1" th:href="@{'/tickets/edit/{id}'(id=${ticket.id})}"
+								role="button">Aggiorna Ticket</a>
+						</tb:lock>
+						<!-- Pulsante di eliminazione disponibile soltanto all'admin -->
+						<th:block th:if="${isAdmin}">
 							<!-- Button trigger modal -->
 							<button type="button" class="btn btn-danger m-1" data-bs-toggle="modal"
 								th:data-bs-target="'#delete-ticket-' + ${ticket.id}">

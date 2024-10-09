@@ -88,7 +88,6 @@ public class TicketController {
 		// il principio di passaggio è lo stesso della index ma si agisce sulla lista filtrata per nome
 
 		boolean isAdmin = false;
-
 		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
 			isAdmin = true;
 		}
@@ -107,11 +106,18 @@ public class TicketController {
 		// controllo che l'operatore loggato possa accedere alla risorsa, e gestione eccezione per risorsa non esistente	
 		try {
 			Ticket ticketToShow = ticketService.getById(id);
+			User loggedUser = userService.getByUsername(authentication.getName());
 			if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("OPERATOR"))
-					&& !userService.getByUsername(authentication.getName()).getTickets().contains(ticketToShow)) {
+					&& !loggedUser.getTickets().contains(ticketToShow)) {
 				return "/pages/authError";
 			}
-			model.addAttribute("ticket", ticketToShow);			
+			boolean isAdmin = false;
+			if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
+				isAdmin = true;
+			}
+			model.addAttribute("ticket", ticketToShow);	
+			model.addAttribute("user", loggedUser);		
+			model.addAttribute("isAdmin", isAdmin);	
 		} catch (NoSuchElementException e) {
 			return "/pages/notFoundError";
 		}
@@ -156,10 +162,11 @@ public class TicketController {
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable int id, Authentication authentication, Model model) {
 
-		// all'operatore a cui non è assegnata la risorsa viene restituita una pagina di errore
+		// all'operatore a cui non è assegnata la risorsa, oppure non è disponibile, viene restituita una pagina di errore
 		Ticket ticketToEdit = ticketService.getById(id);
+		User loggedUser = userService.getByUsername(authentication.getName());
 		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("OPERATOR"))
-				&& !userService.getByUsername(authentication.getName()).getTickets().contains(ticketToEdit)) {
+				&& (!loggedUser.getTickets().contains(ticketToEdit) || !loggedUser.isStatus())) {
 			return "/pages/authError";
 		}
 
