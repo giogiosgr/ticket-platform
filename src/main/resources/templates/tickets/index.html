@@ -84,7 +84,7 @@
 					</thead>
 					<tbody>
 						<tr th:each="ticket : ${tickets}">
-							<th:block th:if="${isAdmin == true} or ${ticket.user.id} == ${loggedUser.id}">
+							<th:block th:if="${isAdmin} or ${ticket.user.id} == ${loggedUser.id}">
 								<td th:text=" ${ticket.id}" class="fw-bold">
 								</td>
 								<td><a class="text-break" th:href="@{'/tickets/show/{id}'(id=${ticket.id})}" th:text="${ticket.title}"

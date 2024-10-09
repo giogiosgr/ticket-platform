@@ -17,7 +17,7 @@
 			<div class="col-4">
 				<form id="ticket-form" th:object="${ticket}" th:action="@{'/tickets/edit/{id}'(id=*{id})}"
 					method="POST">
-					<div class="mb-3" th:classappend="${isAdmin == true} ? '' : 'd-none'">
+					<div class="mb-3" th:classappend="${isAdmin} ? '' : 'd-none'">
 						<label for="title" class="form-label">Titolo ticket</label>
 						<input name="title" type="text" class="form-control" id="title" required minlength="2"
 							maxlength="255" th:field="*{title}" th:errorClass="is-invalid">
@@ -27,7 +27,7 @@
 							</ul>
 						</div>
 					</div>
-					<div class="mb-3" th:classappend="${isAdmin == true} ? '' : 'd-none'">
+					<div class="mb-3" th:classappend="${isAdmin} ? '' : 'd-none'">
 						<label for="description" class="form-label">Descrizione ticket</label>
 						<textarea name="description" class="form-control" id="description" rows="4" maxlength="5000"
 							th:field="*{description}" th:errorClass="is-invalid">
@@ -38,7 +38,7 @@
 							</ul>
 						</div>
 					</div>
-					<div class="mb-3" th:classappend="${isAdmin == true} ? '' : 'd-none'">
+					<div class="mb-3" th:classappend="${isAdmin} ? '' : 'd-none'">
 						<label for="category" class="form-label">Scegli la categoria</label>
 						<select class="form-select" id="category" th:field="*{category}">
 							<th:block th:each="category : ${categories}">
@@ -54,11 +54,11 @@
 							</th:block>
 						</select>
 					</div>
-					<div class="mb-3" th:classappend="${isAdmin == true} ? '' : 'd-none'">
+					<div class="mb-3" th:classappend="${isAdmin} ? '' : 'd-none'">
 						<label for="user" class="form-label">Assegnato a</label>
 						<select class="form-select" id="user" th:field="*{user}">
 							<th:block th:each="operator : ${operators}">
-								<th:block th:if="${operator.status} == true">
+								<th:block th:if="${operator.status}">
 									<option th:value="${operator.id}">[[${operator.username}]]</option>
 								</th:block>
 							</th:block>
