@@ -40,13 +40,17 @@
 							<!-- Blocco con i pulsanti, visibile soltanto se lo user loggato possiede la nota -->
 							<div th:if="${#authentication.principal.username} == ${note.user.username}"
 								class="text-end">
-								<a class="btn btn-sm btn-warning m-1" th:href="@{'/notes/edit/{id}'(id=${note.id})}"
-									role="button">Modifica</a>
-								<!-- Button trigger modal -->
-								<button type="button" class="btn btn-sm btn-danger m-1" data-bs-toggle="modal"
-									th:data-bs-target="'#delete-note-' + ${note.id}">
-									Cancella
-								</button>
+								<div class="d-flex justify-content-end">
+									<form th:action="@{'/notes/edit/{id}'(id=${note.id})}" method="get">
+										<button type="submit" class="btn btn-sm btn-warning m-1" title="Modifica"><i
+												class="fas fa-edit"></i></button>
+									</form>
+									<!-- Button trigger modal -->
+									<button type="button" class="btn btn-sm btn-danger m-1" title="Elimina"
+										data-bs-toggle="modal" th:data-bs-target="'#delete-note-' + ${note.id}">
+										<i class="fa-solid fa-trash"></i>
+									</button>
+								</div>
 								<!-- Modal -->
 								<div class="modal fade" th:id="'delete-note-' + ${note.id}" tabindex="-1"
 									aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -94,7 +98,7 @@
 					</p>
 					<div class="m-4">
 						<a class="btn btn-warning m-1" th:href="@{'/tickets/edit/{id}'(id=${ticket.id})}"
-							role="button">Modifica</a>
+							role="button">Aggiorna Ticket</a>
 						<th:block sec:authorize="hasAuthority('ADMIN')">
 							<!-- Button trigger modal -->
 							<button type="button" class="btn btn-danger m-1" data-bs-toggle="modal"
