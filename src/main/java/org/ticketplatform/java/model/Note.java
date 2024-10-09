@@ -16,6 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -51,6 +52,9 @@ public class Note {
 	@JsonBackReference
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
+	
+	@Transient
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd' 'HH:mm");
 
 	// getters e setters
 
@@ -75,7 +79,6 @@ public class Note {
 	}
 
 	public String getFormattedCreatedAt() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd' 'HH:mm");
 		return createdAt.format(formatter);
 	}
 
@@ -88,7 +91,6 @@ public class Note {
 	}
 
 	public String getFormattedUpdatedAt() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd' 'HH:mm");
 		return updatedAt.format(formatter);
 	}
 

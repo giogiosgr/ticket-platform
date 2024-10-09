@@ -78,6 +78,9 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = { CascadeType.REMOVE })
 	private List<Note> notes;
 	
+	@Transient
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd' 'HH:mm");
+	
 	// getters e setters
 
 	public Integer getId() {
@@ -109,7 +112,6 @@ public class User {
 	}
 	
 	public String getFormattedCreatedAt() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd' 'HH:mm");
 		return createdAt.format(formatter);
 	}
 
@@ -122,7 +124,6 @@ public class User {
 	}
 	
 	public String getFormattedUpdatedAt() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd' 'HH:mm");
 		return updatedAt.format(formatter);
 	}
 	

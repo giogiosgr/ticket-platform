@@ -72,6 +72,9 @@ public class Ticket {
 	@JsonBackReference
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
+	
+	@Transient
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd' 'HH:mm");
 
 	// getters e setters
 
@@ -120,7 +123,6 @@ public class Ticket {
 	}
 
 	public String getFormattedCreatedAt() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd' 'HH:mm");
 		return createdAt.format(formatter);
 	}
 
@@ -133,7 +135,6 @@ public class Ticket {
 	}
 
 	public String getFormattedUpdatedAt() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd' 'HH:mm");
 		return updatedAt.format(formatter);
 	}
 
