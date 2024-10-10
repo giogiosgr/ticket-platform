@@ -55,8 +55,8 @@ public class User {
 	@Column(name = "email", length=100, nullable = false, unique = true)
 	private String email;
     
-	@Column(name = "status")
-	private boolean status;
+	@Column(name = "available")
+	private boolean available;
 	
 	@CreationTimestamp
 	private LocalDateTime createdAt;
@@ -107,12 +107,12 @@ public class User {
 		this.email = email;
 	}
 
-	public boolean isStatus() {
-		return status;
+	public boolean isAvailable() {
+		return available;
 	}
 
-	public void setStatus(boolean status) {
-		this.status = status;
+	public void setAvailable(boolean available) {
+		this.available = available;
 	}
 
 	public LocalDateTime getCreatedAt() {

@@ -55,6 +55,7 @@ public class UserController {
 		// 2 - non può attivare lo stato "non attivo" se è l'unico operatore ancora attivo
 
 		User userToUpdate = userService.getByUsername(authentication.getName());
+		userToUpdate.setValidatePassword(userToUpdate.getPassword());
 
 		if (userToUpdate.getOngoingTickets() > 0) {
 			attributes.addFlashAttribute("notSuccessMessage",
@@ -62,11 +63,11 @@ public class UserController {
 			return "redirect:/users/show";
 		}
 
-		boolean userStatus = userToUpdate.isStatus();
+		boolean userAvailable = userToUpdate.isAvailable();
 		int availableUsersCount = 0;
-		if (userStatus) {
+		if (userAvailable) {
 			for (User user : userService.getAll()) {
-				if (user.isStatus()) {
+				if (user.isAvailable()) {
 					availableUsersCount++;
 				}
 			}
@@ -77,7 +78,7 @@ public class UserController {
 			}
 		}
 
-		userToUpdate.setStatus(!userStatus);
+		userToUpdate.setAvailable(!userAvailable);
 
 		userService.save(userToUpdate);
 
@@ -94,7 +95,7 @@ public class UserController {
 		newRoles.add(roleRepo.findById(2).get());
 
 		newUser.setRoles(newRoles);
-		newUser.setStatus(true);
+		newUser.setAvailable(true);
 		newUser.setEmail("temp");
 
 		model.addAttribute("user", newUser);

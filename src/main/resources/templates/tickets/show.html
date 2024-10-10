@@ -98,7 +98,7 @@
 					</p>
 					<div class="m-4">
 						<!-- Pulsante di modifica non disponibile se lo user è operatore e non disponibile -->
-						<tb:lock th:if="${user.isStatus} or ${isAdmin}">
+						<tb:lock th:if="${user.isAvailable} or ${isAdmin}">
 							<a class="btn btn-warning m-1" th:href="@{'/tickets/edit/{id}'(id=${ticket.id})}"
 								role="button">Aggiorna Ticket</a>
 						</tb:lock>

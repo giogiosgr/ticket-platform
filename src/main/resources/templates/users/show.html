@@ -54,8 +54,8 @@
 					<form id="user-form" th:action="@{/users/edit}" method="POST">
 						<span class="fw-bold me-2">STATO: </span>
 						<button type="submit" class="btn my-2" title="Cambia Stato"
-							th:text="${user.status == true} ? 'DISPONIBILE' : 'NON DISPONIBILE'"
-							th:classappend="${user.status == true} ? 'btn-success' : 'btn-danger'"></button>
+							th:text="${user.available} ? 'DISPONIBILE' : 'NON DISPONIBILE'"
+							th:classappend="${user.available} ? 'btn-success' : 'btn-danger'"></button>
 					</form>
 				</div>
 			</th:block>

@@ -166,7 +166,7 @@ public class TicketController {
 		Ticket ticketToEdit = ticketService.getById(id);
 		User loggedUser = userService.getByUsername(authentication.getName());
 		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("OPERATOR"))
-				&& (!loggedUser.getTickets().contains(ticketToEdit) || !loggedUser.isStatus())) {
+				&& (!loggedUser.getTickets().contains(ticketToEdit) || !loggedUser.isAvailable())) {
 			return "/pages/authError";
 		}
 
