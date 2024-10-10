@@ -100,6 +100,13 @@ public class CategoryController {
 	@PostMapping("/delete/{id}")
 	public String delete(@PathVariable int id, Authentication authentication, RedirectAttributes attributes) {
 
+		// non si può eliminare una categoria se è l'unica presente	
+		if (categoryService.getAll().size() == 1) {
+			attributes.addFlashAttribute("notSuccessMessage",
+					"Impossibile eliminare l'ultima categoria, almeno una deve essere presente");
+			return "redirect:/categories";
+		}
+
 		Category categoryToDelete = categoryService.getById(id);
 
 		categoryService.delete(categoryToDelete);
