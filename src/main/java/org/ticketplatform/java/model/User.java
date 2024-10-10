@@ -69,6 +69,8 @@ public class User {
 			+ "WHERE tickets.user_id = id)")
 	private Integer ongoingTickets;
 	
+	
+	
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Role> roles;
 	
@@ -77,6 +79,12 @@ public class User {
 	
 	@OneToMany(mappedBy = "user", cascade = { CascadeType.REMOVE })
 	private List<Note> notes;
+	
+	@NotNull
+	@NotEmpty
+	@Size(max=50)
+	@Transient
+	private String validatePassword;
 	
 	@Transient
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd' 'HH:mm");
@@ -177,6 +185,14 @@ public class User {
 
 	public void setOngoingTickets(Integer ongoingTickets) {
 		this.ongoingTickets = ongoingTickets;
+	}
+
+	public String getValidatePassword() {
+		return validatePassword;
+	}
+
+	public void setValidatePassword(String validatePassword) {
+		this.validatePassword = validatePassword;
 	}
 	
 }

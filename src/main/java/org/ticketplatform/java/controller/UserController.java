@@ -111,6 +111,12 @@ public class UserController {
 	        return "/users/create";
 	 	}
 	    
+	    // restituzione errore nel caso che i campi password e validatePassword non coincidano
+	    if (!userForm.getPassword().equals(userForm.getValidatePassword())) {
+	    	attributes.addFlashAttribute("notSuccessMessage", "le password inserite non coincidono");
+	    	return "redirect:/users/create";
+	    }
+	    
 	    String newUsername = userForm.getUsername().toLowerCase();
 	    
 	    userForm.setPassword("{noop}" + userForm.getPassword());

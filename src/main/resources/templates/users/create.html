@@ -40,6 +40,16 @@
 							</ul>
 						</div>
 					</div>
+					<div class="mb-3">
+						<label for="validatePassword" class="form-label">Conferma Password</label>
+						<input name="validatePassword" type="password" class="form-control" id="validatePassword" required
+							maxlength="50" th:field="*{validatePassword}" th:errorClass="is-invalid">
+						<div th:if="${#fields.hasErrors('validatePassword')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('validatePassword')}" th:text="${err}"></li>
+							</ul>
+						</div>
+					</div>
 					<button type="submit" class="btn btn-primary m-2">Conferma Inserimento</button>
 					<button type="reset" class="btn btn-primary m-2">Reset</button>
 					<!-- Fields nascosti -->
