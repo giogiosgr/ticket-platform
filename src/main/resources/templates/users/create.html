@@ -32,9 +32,13 @@
 					</div>
 					<div class="mb-3">
 						<label for="password" class="form-label">Password</label>
-						<input name="password" type="password" class="form-control" id="password" required
-							maxlength="50" th:field="*{password}" th:errorClass="is-invalid">
-						<div th:if="${#fields.hasErrors('password')}" class="invalid-feedback">
+						<div class="input-group">
+							<input name="password" type="password" class="form-control" id="password" required
+								maxlength="50" th:field="*{password}" th:errorClass="is-invalid">
+							<button id="showPasswordButton" type="button" class="btn ms-1"><i id="showPasswordIcon"
+									class="fa fa-eye"></i></button>
+						</div>
+						<div th:if="${#fields.hasErrors('password')}" class="invalid-feedback d-block">
 							<ul>
 								<li th:each="err : ${#fields.errors('password')}" th:text="${err}"></li>
 							</ul>
@@ -42,9 +46,13 @@
 					</div>
 					<div class="mb-3">
 						<label for="validatePassword" class="form-label">Conferma Password</label>
-						<input name="validatePassword" type="password" class="form-control" id="validatePassword" required
-							maxlength="50" th:field="*{validatePassword}" th:errorClass="is-invalid">
-						<div th:if="${#fields.hasErrors('validatePassword')}" class="invalid-feedback">
+						<div class="input-group">
+							<input name="validatePassword" type="password" class="form-control" id="validatePassword"
+								required maxlength="50" th:field="*{validatePassword}" th:errorClass="is-invalid">
+							<button id="showValidatePasswordButton" type="button" class="btn ms-1"><i id="showValidatePasswordIcon"
+									class="fa fa-eye"></i></button>
+						</div>
+						<div th:if="${#fields.hasErrors('validatePassword')}" class="invalid-feedback d-block">
 							<ul>
 								<li th:each="err : ${#fields.errors('validatePassword')}" th:text="${err}"></li>
 							</ul>
@@ -63,6 +71,7 @@
 
 	<footer>
 		<th:block th:replace="~{fragments/fragments :: scripts}"></th:block>
+		<script th:src="@{/JS/showPassword.js}"></script>
 	</footer>
 
 </body>
