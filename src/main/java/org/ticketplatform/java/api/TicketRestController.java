@@ -46,36 +46,47 @@ public class TicketRestController {
 
 		return result;
 	}
-	
+
 	@GetMapping("/id/{id}")
 	public ResponseEntity<Ticket> show(@PathVariable int id) {
-		
+
 		Optional<Ticket> ticket = ticketService.getOptionalById(id);
-		
+
 		if (ticket.isPresent()) {
 			return new ResponseEntity<>(ticket.get(), HttpStatus.OK);
 		}
-		
+
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	@GetMapping("/category/{category}")
-	public List<Ticket> filterByCategory(@PathVariable String category) {
+	public ResponseEntity<List<Ticket>> filterByCategory(@PathVariable String category) {
 
 		List<Ticket> listByCategory = new ArrayList<>();
+
 		for (Ticket ticket : ticketService.getAll()) {
 			if (ticket.getCategory().getName().toLowerCase().equals(category.toLowerCase())) {
 				listByCategory.add(ticket);
 			}
 		}
 
-		return listByCategory;
+		if (listByCategory.size() > 0) {
+			return new ResponseEntity<>(listByCategory, HttpStatus.OK);
+		}
+
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	@GetMapping("/status/{status}")
-	public List<Ticket> filterByStatus(@PathVariable TicketStatus status) {
+	public ResponseEntity<List<Ticket>> filterByStatus(@PathVariable TicketStatus status) {
 
-		return ticketService.getByStatus(status);
+		List<Ticket> listByStatus = ticketService.getByStatus(status);
+
+		if (listByStatus.size() > 0) {
+			return new ResponseEntity<>(listByStatus, HttpStatus.OK);
+		}
+
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 }
