@@ -15,7 +15,7 @@ showPasswordButton.addEventListener("mousedown", function() {
 
 });
 
-showPasswordButton.addEventListener("mouseup", function() {
+document.addEventListener("mouseup", function() {
 
 	passwordInput.setAttribute("type", "password");
 
@@ -27,7 +27,7 @@ showValidatePasswordButton.addEventListener("mousedown", function() {
 
 });
 
-showValidatePasswordButton.addEventListener("mouseup", function() {
+document.addEventListener("mouseup", function() {
 
 	validatePasswordInput.setAttribute("type", "password");
 
