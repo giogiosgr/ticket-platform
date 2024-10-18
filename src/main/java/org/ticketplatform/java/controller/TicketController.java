@@ -52,15 +52,8 @@ public class TicketController {
 		// Consegna della lista di tickets alla index
 		// Un admin vedrà tutti i ticket
 		// Un operatore vedrà soltanto i ticket a lui assegnati
-		// I compare su Ruolo e Identità avverranno su Thymeleaf passando i necessari valori al modello
-
-		boolean isAdmin = false;
-		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
-			isAdmin = true;
-		}
 
 		// Parametri di sorting (campo e direzione ordinamento) e recupero tickets per sorting specifico
-
 		if (sortField == null) {
 			sortField = "id";
 		}
@@ -70,10 +63,18 @@ public class TicketController {
 		}
 
 		Sort sort = sortDir.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+		
+		List<Ticket> tickets = new ArrayList<>();
+		
+		User loggedUser = userService.getByUsername(authentication.getName());
+		
+		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
+			tickets = ticketService.getAllSorted(sort);
+		} else {
+			tickets = ticketService.getAllByUserSorted(sort, loggedUser);
+		}
 
-		model.addAttribute("tickets", ticketService.getAll(sort));
-		model.addAttribute("loggedUser", userService.getByUsername(authentication.getName()));
-		model.addAttribute("isAdmin", isAdmin);
+		model.addAttribute("tickets", tickets);
 		model.addAttribute("sortField", sortField);
 		model.addAttribute("sortDir", sortDir);
 		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
@@ -86,15 +87,18 @@ public class TicketController {
 	public String search(@RequestParam String title, Authentication authentication, Model model) {
 
 		// il principio di passaggio è lo stesso della index ma si agisce sulla lista filtrata per nome
-
-		boolean isAdmin = false;
+		
+		List<Ticket> tickets = new ArrayList<>();
+		
+		User loggedUser = userService.getByUsername(authentication.getName());
+		
 		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
-			isAdmin = true;
+			tickets = ticketService.getByTitleWithOrderByTitle(title);
+		} else {
+			tickets = ticketService.getByUserByTitleWithOrderByTitle(title, loggedUser);
 		}
 
 		model.addAttribute("tickets", ticketService.getByTitleWithOrderByTitle(title));
-		model.addAttribute("loggedUser", userService.getByUsername(authentication.getName()));
-		model.addAttribute("isAdmin", isAdmin);
 
 		return "/tickets/index";
 	}

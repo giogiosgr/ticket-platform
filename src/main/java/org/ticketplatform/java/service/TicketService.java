@@ -1,6 +1,7 @@
 package org.ticketplatform.java.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.ticketplatform.java.model.Ticket;
 import org.ticketplatform.java.model.TicketStatus;
+import org.ticketplatform.java.model.User;
 import org.ticketplatform.java.repo.TicketRepository;
 
 import jakarta.validation.Valid;
@@ -37,17 +39,46 @@ public class TicketService {
 
 	}
 	
-	public Object getAll(Sort sort) {
+	public List<Ticket> getAllSorted(Sort sort) {
 		
 		return repo.findAll(sort);
 		
 	}
-
+	
+	public List<Ticket> getAllByUserSorted(Sort sort, User user) {
+		
+		List<Ticket> tickets = repo.findAll(sort);
+		List<Ticket> ownedTickets = new ArrayList<>();
+		
+		for (Ticket x : tickets) {
+			if (user.getTickets().contains(x)) {
+				ownedTickets.add(x);
+			}
+		}
+		
+		return ownedTickets;
+		
+	}
 
 	public List<Ticket> getByTitleWithOrderByTitle(String title) {
 
 		return repo.findByTitleContainingOrderByTitle(title);
 
+	}
+	
+	public List<Ticket> getByUserByTitleWithOrderByTitle(String title, User user) {
+	
+        List<Ticket> tickets = repo.findByTitleContainingOrderByTitle(title);
+		List<Ticket> ownedTickets = new ArrayList<>();
+		
+		for (Ticket x : tickets) {
+			if (user.getTickets().contains(x)) {
+				ownedTickets.add(x);
+			}
+		}
+		
+		return ownedTickets;
+		
 	}
 
 	public void save(@Valid Ticket ticket) {
