@@ -118,7 +118,7 @@ public class TicketController {
 			model.addAttribute("ticket", ticketToShow);	
 			model.addAttribute("user", loggedUser);		
 			model.addAttribute("isAdmin", isAdmin);	
-		} catch (NoSuchElementException e) {
+		} catch (Exception e) {
 			return "/pages/notFoundError";
 		}
 
