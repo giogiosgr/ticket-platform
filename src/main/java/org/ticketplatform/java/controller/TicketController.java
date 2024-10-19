@@ -93,9 +93,9 @@ public class TicketController {
 		User loggedUser = userService.getByUsername(authentication.getName());
 		
 		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
-			tickets = ticketService.getByTitleWithOrderByTitle(title);
+			tickets = ticketService.getByTitleWithOrderByUpdatedAt(title);
 		} else {
-			tickets = ticketService.getByUserByTitleWithOrderByTitle(title, loggedUser);
+			tickets = ticketService.getByUserByTitleWithOrderByUpdatedAt(title, loggedUser);
 		}
 
 		model.addAttribute("tickets", tickets);

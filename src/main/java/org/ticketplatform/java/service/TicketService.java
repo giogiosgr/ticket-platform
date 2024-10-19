@@ -60,15 +60,15 @@ public class TicketService {
 		
 	}
 
-	public List<Ticket> getByTitleWithOrderByTitle(String title) {
+	public List<Ticket> getByTitleWithOrderByUpdatedAt(String title) {
 
-		return repo.findByTitleContainingOrderByTitle(title);
+		return repo.findByTitleContainingOrderByUpdatedAtDesc(title);
 
 	}
 	
-	public List<Ticket> getByUserByTitleWithOrderByTitle(String title, User user) {
+	public List<Ticket> getByUserByTitleWithOrderByUpdatedAt(String title, User user) {
 	
-        List<Ticket> tickets = repo.findByTitleContainingOrderByTitle(title);
+        List<Ticket> tickets = repo.findByTitleContainingOrderByUpdatedAtDesc(title);
 		List<Ticket> ownedTickets = new ArrayList<>();
 		
 		for (Ticket x : tickets) {

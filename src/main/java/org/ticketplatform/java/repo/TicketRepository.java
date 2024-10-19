@@ -10,7 +10,7 @@ import org.ticketplatform.java.model.TicketStatus;
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 	
-	List<Ticket> findByTitleContainingOrderByTitle(String title);
+	List<Ticket> findByTitleContainingOrderByUpdatedAtDesc(String title);
 	
 	List<Ticket> findByStatus(TicketStatus status);
 

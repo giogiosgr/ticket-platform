@@ -39,7 +39,7 @@ public class TicketRestController {
 		List<Ticket> result;
 
 		if (title != null && !title.isEmpty()) {
-			result = ticketService.getByTitleWithOrderByTitle(title);
+			result = ticketService.getByTitleWithOrderByUpdatedAt(title);
 		} else {
 			result = ticketService.getAll();
 		}
