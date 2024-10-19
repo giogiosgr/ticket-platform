@@ -32,7 +32,7 @@ public class CategoryController {
 
 		model.addAttribute("categories", categoryService.getAll());
 
-		return "/categories/index";
+		return "categories/index";
 	}
 
 	// CREATE
@@ -41,7 +41,7 @@ public class CategoryController {
 
 		model.addAttribute("category", new Category());
 
-		return "/categories/create";
+		return "categories/create";
 	}
 
 	// STORE
@@ -50,7 +50,7 @@ public class CategoryController {
 			Model model, RedirectAttributes attributes) {
 
 		if (bindingResult.hasErrors()) {
-			return "/categories/create";
+			return "categories/create";
 		}
 
 		// gestione eccezione del caso di nome già appartenente ad una categoria
@@ -72,7 +72,7 @@ public class CategoryController {
 
 		model.addAttribute("category", categoryService.getById(id));
 
-		return "/categories/edit";
+		return "categories/edit";
 	}
 
 	// UPDATE
@@ -81,7 +81,7 @@ public class CategoryController {
 			@PathVariable int id, Model model, RedirectAttributes attributes) {
 
 		if (bindingResult.hasErrors()) {
-			return "/categories/edit";
+			return "categories/edit";
 		}
 
 		// gestione eccezione del caso di nome già appartenente ad una categoria

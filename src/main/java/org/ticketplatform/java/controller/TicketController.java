@@ -79,7 +79,7 @@ public class TicketController {
 		model.addAttribute("sortDir", sortDir);
 		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 
-		return "/tickets/index";
+		return "tickets/index";
 	}
 
 	// SEARCH
@@ -98,9 +98,9 @@ public class TicketController {
 			tickets = ticketService.getByUserByTitleWithOrderByTitle(title, loggedUser);
 		}
 
-		model.addAttribute("tickets", ticketService.getByTitleWithOrderByTitle(title));
+		model.addAttribute("tickets", tickets);
 
-		return "/tickets/index";
+		return "tickets/index";
 	}
 
 	// SHOW
@@ -113,7 +113,7 @@ public class TicketController {
 			User loggedUser = userService.getByUsername(authentication.getName());
 			if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("OPERATOR"))
 					&& !loggedUser.getTickets().contains(ticketToShow)) {
-				return "/pages/authError";
+				return "pages/authError";
 			}
 			boolean isAdmin = false;
 			if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
@@ -123,10 +123,10 @@ public class TicketController {
 			model.addAttribute("user", loggedUser);		
 			model.addAttribute("isAdmin", isAdmin);	
 		} catch (Exception e) {
-			return "/pages/notFoundError";
+			return "pages/notFoundError";
 		}
 
-		return "/tickets/show";
+		return "tickets/show";
 	}
 
 	// CREATE
@@ -141,7 +141,7 @@ public class TicketController {
 		model.addAttribute("operators", userService.getAll());
 		model.addAttribute("categories", categoryService.getAll());
 
-		return "/tickets/create";
+		return "tickets/create";
 	}
 
 	// STORE
@@ -152,7 +152,7 @@ public class TicketController {
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("operators", userService.getAll());
 			model.addAttribute("categories", categoryService.getAll());
-			return "/tickets/create";
+			return "tickets/create";
 		}
 
 		ticketService.save(ticketForm);
@@ -171,7 +171,7 @@ public class TicketController {
 		User loggedUser = userService.getByUsername(authentication.getName());
 		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("OPERATOR"))
 				&& (!loggedUser.getTickets().contains(ticketToEdit) || !loggedUser.isAvailable())) {
-			return "/pages/authError";
+			return "pages/authError";
 		}
 
 		// i campi disponibili nel form di edit varieranno a seconda del ruolo
@@ -186,7 +186,7 @@ public class TicketController {
 		model.addAttribute("ticketStatuses", TicketStatus.values());
 		model.addAttribute("isAdmin", isAdmin);
 		
-		return "/tickets/edit";
+		return "tickets/edit";
 	}
 
 	// UPDATE
@@ -204,7 +204,7 @@ public class TicketController {
 			model.addAttribute("categories", categoryService.getAll());
 			model.addAttribute("ticketStatuses", TicketStatus.values());
 			model.addAttribute("isAdmin", isAdmin);		
-			return "/tickets/edit";
+			return "tickets/edit";
 		}
 
 		ticketService.save(ticketForm);

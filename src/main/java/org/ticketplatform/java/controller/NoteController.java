@@ -45,7 +45,7 @@ public class NoteController {
 		Ticket ticketById = ticketService.getById(id);
 		if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("OPERATOR")) &&
 			!userService.getByUsername(authentication.getName()).getTickets().contains(ticketById)) {		
-			return "/pages/authError";
+			return "pages/authError";
 		}
 		
 		// definizione di ticket e user a cui appartiene la nota da passare al model
@@ -56,16 +56,16 @@ public class NoteController {
 
 		model.addAttribute("note", newNote);
 
-		return "/notes/create";
+		return "notes/create";
 	}
 
 	// STORE
-	@PostMapping("/create")
+	@PostMapping("create")
 	public String store(@Valid @ModelAttribute("note") Note noteForm, BindingResult bindingResult, Model model,
 			RedirectAttributes attributes) {
 
 		if (bindingResult.hasErrors()) {
-			return "/notes/create";
+			return "notes/create";
 		}
 
 		noteService.save(noteForm);
@@ -86,12 +86,12 @@ public class NoteController {
 		
 		Note noteToEdit = noteService.getById(id);
 		if (!userService.getByUsername(authentication.getName()).getNotes().contains(noteToEdit)) {		
-			return "/pages/authError";
+			return "pages/authError";
 		}
 
 		model.addAttribute("note", noteService.getById(id));
 
-		return "/notes/edit";
+		return "notes/edit";
 	}
 
 	// UPDATE
@@ -100,7 +100,7 @@ public class NoteController {
 			RedirectAttributes attributes) {
 
 		if (bindingResult.hasErrors()) {
-			return "/notes/edit";
+			return "notes/edit";
 		}
 
 		noteService.save(noteForm);

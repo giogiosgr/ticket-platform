@@ -14,7 +14,7 @@ public class HomeController {
 
 		model.addAttribute("name", "Giovanni");
 
-		return "/pages/home";
+		return "pages/home";
 	}
 
 }

@@ -43,7 +43,7 @@ public class UserController {
 
 		model.addAttribute("user", userService.getByUsername(authentication.getName()));
 
-		return "/users/show";
+		return "users/show";
 	}
 
 	// UPDATE (status operatore)
@@ -100,7 +100,7 @@ public class UserController {
 
 		model.addAttribute("user", newUser);
 
-		return "/users/create";
+		return "users/create";
 	}
 
 	// STORE (nuovo user con ruolo operatore)
@@ -109,7 +109,7 @@ public class UserController {
 			RedirectAttributes attributes) {
 
 	    if (bindingResult.hasErrors()) {
-	        return "/users/create";
+	        return "users/create";
 	 	}
 	    
 	    // restituzione errore nel caso che i campi password e validatePassword non coincidano
