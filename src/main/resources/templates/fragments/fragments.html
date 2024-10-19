@@ -33,7 +33,7 @@
 						th:text="${#authentication.principal.username}"></span></p>
 				<a th:unless="${page} == 'userpage'" class="btn btn-info me-3"
 					th:href="@{users/show}" role="button">Area Personale</a>
-				<a class="btn btn-danger me-5" th:href="@{logout}" role="button">Logout</a>
+				<a class="btn btn-danger me-5" th:href="@{/logout}" role="button">Logout</a>
 			</div>
 		</form>
 	</nav>
