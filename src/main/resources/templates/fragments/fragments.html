@@ -24,16 +24,16 @@
 	<nav th:fragment="navbar(page)" class="navbar bg-body-tertiary">
 		<form class="container-fluid ms-3 justify-content-between">
 			<div class="d-flex align-items-center">
-				<a th:unless="${page} == 'home'" th:href="@{http://localhost:8080}" class="navbar-brand">HOMEPAGE</a>
-				<a href="http://localhost:8080/tickets"><button class="btn btn-outline-success" type="button">DASHBOARD
+				<a th:unless="${page} == 'home'" th:href="@{http://165.227.150.171:8080}" class="navbar-brand">HOMEPAGE</a>
+				<a href="http://165.227.150.171:8080/tickets"><button class="btn btn-outline-success" type="button">DASHBOARD
 						TICKETS</button></a>
 			</div>
 			<div class="d-flex align-items-center">
 				<p class="mb-0 me-4">Benvenuto, sei loggato come: <span class="fw-bold"
 						th:text="${#authentication.principal.username}"></span></p>
 				<a th:unless="${page} == 'userpage'" class="btn btn-info me-3"
-					th:href="@{http://localhost:8080/users/show}" role="button">Area Personale</a>
-				<a class="btn btn-danger me-5" th:href="@{http://localhost:8080/logout}" role="button">Logout</a>
+					th:href="@{http://165.227.150.171:8080/users/show}" role="button">Area Personale</a>
+				<a class="btn btn-danger me-5" th:href="@{http://165.227.150.171:8080/logout}" role="button">Logout</a>
 			</div>
 		</form>
 	</nav>
