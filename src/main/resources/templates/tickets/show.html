@@ -70,7 +70,7 @@
 												<button type="button" class="btn btn-secondary"
 													data-bs-dismiss="modal">Annulla</button>
 												<form class="d-inline-block"
-													th:action="@{http://165.227.150.171:8080/notes/delete/{id}(id=${note.id})}"
+													th:action="@{notes/delete/{id}(id=${note.id})}"
 													method="post">
 													<button class="btn btn-danger m-1" type="submit"
 														id="submitButton">Conferma</button>
