@@ -33,7 +33,7 @@
 								th:text="'Nota del ' + ${note.FormattedCreatedAt} + ' - autore: ' + ${note.user.username}">
 							</h4>
 							<p class="card-text my-3" th:text="${note.text}"></p>
-							<th:block th:if="${note.createdAt} != ${note.updatedAt}">
+							<th:block th:if="${note.createdAt} < ${note.updatedAt}">
 								<p class="card-text my-2 fs-6 fst-italic text-end"
 									th:text="'Modificato il: ' + ${note.FormattedUpdatedAt}"></p>
 							</th:block>
@@ -70,7 +70,7 @@
 												<button type="button" class="btn btn-secondary"
 													data-bs-dismiss="modal">Annulla</button>
 												<form class="d-inline-block"
-													th:action="@{notes/delete/{id}(id=${note.id})}"
+													th:action="@{/notes/delete/{id}(id=${note.id})}"
 													method="post">
 													<button class="btn btn-danger m-1" type="submit"
 														id="submitButton">Conferma</button>
