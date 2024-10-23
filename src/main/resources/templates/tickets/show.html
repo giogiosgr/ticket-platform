@@ -30,12 +30,12 @@
 					<div class="card text-bg-success p-1 mx-4 my-3">
 						<div class="card-body">
 							<h4 class="card-title pb-1 border-bottom"
-								th:text="'Nota del ' + ${note.FormattedCreatedAt} + ' - autore: ' + ${note.user.username}">
+								th:text="'Nota del ' + ${note.getFormattedCreatedAt} + ' - autore: ' + ${note.user.username}">
 							</h4>
 							<p class="card-text my-3" th:text="${note.text}"></p>
-							<th:block th:if="${note.createdAt} < ${note.updatedAt}">
+							<th:block th:if="${note.getFormattedCreatedAt} != ${note.getFormattedUpdatedAt}">
 								<p class="card-text my-2 fs-6 fst-italic text-end"
-									th:text="'Modificato il: ' + ${note.FormattedUpdatedAt}"></p>
+									th:text="'Modificato il: ' + ${note.getFormattedUpdatedAt}"></p>
 							</th:block>
 							<!-- Blocco con i pulsanti, visibile soltanto se lo user loggato possiede la nota -->
 							<div th:if="${#authentication.principal.username} == ${note.user.username}"
